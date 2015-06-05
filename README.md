@@ -170,4 +170,3 @@ $dispatcher = new Pipeline($queue, $resolver);
 ```
 
 As long as the classes listed in the `$queue` implement `__invoke(Request $request, Response $response, callable $next)`, then the _Pipeline_ will work correctly.
-
