@@ -61,7 +61,9 @@ Create a _Pipeline_ with the `$queue`, and invoke it with a request and response
  * @var \Psr\Http\Message\ResponseInterface $response
  */
 
-$dispatcher = new \Pipeline\Pipeline\Pipeline($queue);
+use Pipeline\Pipeline;
+
+$dispatcher = new Pipeline\Pipeline($queue);
 $dispatcher($request, $response);
 ```
 
@@ -163,11 +165,13 @@ You can then add `$queue` entries as class names, and the _Pipeline_ will use th
 `$resolver` to create the objects in turn.
 
 ```php
+use Pipeline\Pipeline;
+
 $queue[] = 'FooMiddleware';
 $queue[] = 'BarMiddleware';
 $queue[] = 'BazMiddleware';
 
-$dispatcher = new Pipeline($queue, $resolver);
+$dispatcher = new Pipeline\Pipeline($queue, $resolver);
 ```
 
 As long as the classes listed in the `$queue` implement `__invoke(Request, $request, Response $response, callable $next)`, then the _Pipeline_ will work correctly.
