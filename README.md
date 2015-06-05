@@ -4,15 +4,11 @@ A PSR-7 middleware dispatcher.
 
 ## Installation, Autoloading, and Tests
 
-This package is installable and PSR-4 autoloadable via Composer as
-`pipeline/pipeline`.
+This package is installable and PSR-4 autoloadable via Composer as `pipeline/pipeline`.
 
-Alternatively, download a release or clone this repository, then map the
-`Pipeline\Pipeline\` namespace to the package `src/` directory.
+Alternatively, download a release or clone this repository, then map the `Pipeline\Pipeline\` namespace to the package `src/` directory.
 
-This package requires PHP 5.5 or later; it has been tested on PHP 5.6, PHP 7,
-and HHVM. We recommend using the latest available version of PHP as a matter of
-principle.
+This package requires PHP 5.5 or later; it has been tested on PHP 5.6, PHP 7, and HHVM. We recommend using the latest available version of PHP as a matter of principle.
 
 To run the tests, issue `composer install` to install the test dependencies, then issue `phpunit`.
 
@@ -61,9 +57,9 @@ Create a _Pipeline_ with the `$queue`, and invoke it with a request and response
  * @var \Psr\Http\Message\ResponseInterface $response
  */
 
-use Pipeline\Pipeline;
+use Pipeline\Pipeline\Pipeline;
 
-$dispatcher = new Pipeline\Pipeline($queue);
+$dispatcher = new Pipeline($queue);
 $dispatcher($request, $response);
 ```
 
@@ -165,14 +161,14 @@ You can then add `$queue` entries as class names, and the _Pipeline_ will use th
 `$resolver` to create the objects in turn.
 
 ```php
-use Pipeline\Pipeline;
+use Pipeline\Pipeline\Pipeline;
 
 $queue[] = 'FooMiddleware';
 $queue[] = 'BarMiddleware';
 $queue[] = 'BazMiddleware';
 
-$dispatcher = new Pipeline\Pipeline($queue, $resolver);
+$dispatcher = new Pipeline($queue, $resolver);
 ```
 
-As long as the classes listed in the `$queue` implement `__invoke(Request, $request, Response $response, callable $next)`, then the _Pipeline_ will work correctly.
+As long as the classes listed in the `$queue` implement `__invoke(Request $request, Response $response, callable $next)`, then the _Pipeline_ will work correctly.
 
