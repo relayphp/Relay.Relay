@@ -1,0 +1,33 @@
+{
+    "name": "aura/middleware",
+    "type": "library",
+    "description": "A PSR-7 middleware dispatcher.",
+    "keywords": [
+        "middleware",
+        "psr-7"
+    ],
+    "homepage": "https://github.com/pipelinephp/Pipeline.Pipeline",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pipeline.Pipeline Contributors",
+            "homepage": "https://github.com/pipelinephp/Pipeline.Pipeline/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pipeline\\Pipeline\\": "src/"
+        }
+    },
+    "require-dev": {
+        "zendframework/zend-diactoros": "~1.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Pipeline\\Pipeline\\": "tests/"
+        }
+    }
+}
