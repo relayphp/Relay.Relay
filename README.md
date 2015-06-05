@@ -69,15 +69,15 @@ That will execute each of the middlewares in first-in-first-out order.
 
 Your middleware logic should follow this pattern:
 
-- Receive the incoming request and request objects from the previous middleware as parameters, along with the next middleware as a callable.
+- Receive the incoming request and response objects from the previous middleware as parameters, along with the next middleware as a callable.
 
-- Optionally modify the received request and request as desired.
+- Optionally modify the received request and response as desired.
 
-- Optionally invoke the next middleware with the request and request, receiving a new request in return.
+- Optionally invoke the next middleware with the request and response, receiving a new response in return.
 
-- Optionally modify the returned request as desired.
+- Optionally modify the returned response as desired.
 
-- Return the request to the previous middleware.
+- Return the response to the previous middleware.
 
 Here is a skeleton example; your own middleware may or may not perform the various optional processes:
 
@@ -95,7 +95,7 @@ $queue[] = function (Request $request, Response $response, callable $next) {
         return $response;
     }
 
-    // optionally invoke the $next middleware and get back a new Response
+    // optionally invoke the $next middleware and get back a new response
     $response = $next($request, $response);
 
     // optionally modify the Response if desired
@@ -106,11 +106,11 @@ $queue[] = function (Request $request, Response $response, callable $next) {
 };
 ```
 
-> N.b.: You should **always** return the request from your middleware logic.
+> N.b.: You should **always** return the response from your middleware logic.
 
-Remember that the request and request are **immutable**. Implicit in that is the fact that changes to the request are always transmitted to the `$next` middleware but never to the previous one.
+Remember that the request and response are **immutable**. Implicit in that is the fact that changes to the request are always transmitted to the `$next` middleware but never to the previous one.
 
-Note also that this logic chain means the request and request are subjected to two passes through each middleware:
+Note also that this logic chain means the request and response are subjected to two passes through each middleware:
 
 - first on the way "in" through each middleware via the `$next` middleware invocation,
 
@@ -132,8 +132,7 @@ $queue[] = function (Request $request, Response $response, callable $next) {
 };
 ```
 
-... the request and request path through the middlewares will look like
-this:
+... the request and response path through the middlewares will look like this:
 
 ```
 Foo is 1st on the way in
