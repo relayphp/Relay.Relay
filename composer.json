@@ -1,5 +1,5 @@
 {
-    "name": "aura/middleware",
+    "name": "pipeline/pipeline",
     "type": "library",
     "description": "A PSR-7 middleware dispatcher.",
     "keywords": [
