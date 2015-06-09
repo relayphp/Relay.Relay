@@ -1,26 +1,26 @@
 <?php
 /**
  *
- * This file is part of Pipeline for PHP.
+ * This file is part of Relay for PHP.
  *
  * @license http://opensource.org/licenses/MIT MIT
  *
  * @copyright 2015, Paul M. Jones
  *
  */
-namespace Pipeline\Pipeline;
+namespace Relay\Relay;
 
 use ArrayObject;
 use InvalidArgumentException;
 
 /**
  *
- * Builds a Pipeline object.
+ * Builds a Relay object.
  *
- * @package Pipeline.Pipeline
+ * @package Relay.Relay
  *
  */
-class PipelineBuilder
+class RelayBuilder
 {
     /**
      *
@@ -42,14 +42,14 @@ class PipelineBuilder
      * Returns a new Pipline instance.
      *
      * @param array|ArrayObject|GetArrayCopyInterface $queue The queue for the
-     * Pipeline.
+     * Relay.
      *
-     * @return Pipeline
+     * @return Relay
      *
      */
     public function newInstance($queue)
     {
-        return new Pipeline($this->getArray($queue), $this->resolver);
+        return new Relay($this->getArray($queue), $this->resolver);
     }
 
     /**

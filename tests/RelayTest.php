@@ -1,10 +1,10 @@
 <?php
-namespace Pipeline\Pipeline;
+namespace Relay\Relay;
 
 use Zend\Diactoros\ServerRequestFactory;
 use Zend\Diactoros\Response;
 
-class PipelineTest extends \PHPUnit_Framework_TestCase
+class RelayTest extends \PHPUnit_Framework_TestCase
 {
     public function testWithoutResolver()
     {
@@ -14,7 +14,7 @@ class PipelineTest extends \PHPUnit_Framework_TestCase
         $queue[] = new FakeMiddleware();
         $queue[] = new FakeMiddleware();
 
-        $dispatcher = new Pipeline($queue);
+        $dispatcher = new Relay($queue);
         $response = $dispatcher(
             ServerRequestFactory::fromGlobals(),
             new Response()
@@ -28,15 +28,15 @@ class PipelineTest extends \PHPUnit_Framework_TestCase
     {
         FakeMiddleware::$count = 0;
 
-        $queue[] = 'Pipeline\Pipeline\FakeMiddleware';
-        $queue[] = 'Pipeline\Pipeline\FakeMiddleware';
-        $queue[] = 'Pipeline\Pipeline\FakeMiddleware';
+        $queue[] = 'Relay\Relay\FakeMiddleware';
+        $queue[] = 'Relay\Relay\FakeMiddleware';
+        $queue[] = 'Relay\Relay\FakeMiddleware';
 
         $resolver = function ($class) {
             return new $class();
         };
 
-        $dispatcher = new Pipeline($queue, $resolver);
+        $dispatcher = new Relay($queue, $resolver);
         $response = $dispatcher(
             ServerRequestFactory::fromGlobals(),
             new Response()

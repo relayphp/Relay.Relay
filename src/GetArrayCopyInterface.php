@@ -1,20 +1,20 @@
 <?php
 /**
  *
- * This file is part of Pipeline for PHP.
+ * This file is part of Relay for PHP.
  *
  * @license http://opensource.org/licenses/MIT MIT
  *
  * @copyright 2015, Paul M. Jones
  *
  */
-namespace Pipeline\Pipeline;
+namespace Relay\Relay;
 
 /**
  *
  * Allows queue-building objects to return an array copy.
  *
- * @package Pipeline.Pipeline
+ * @package Relay.Relay
  *
  */
 interface GetArrayCopyInterface

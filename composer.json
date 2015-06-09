@@ -1,17 +1,17 @@
 {
-    "name": "pipeline/pipeline",
+    "name": "relay/relay",
     "type": "library",
     "description": "A PSR-7 middleware dispatcher.",
     "keywords": [
         "middleware",
         "psr-7"
     ],
-    "homepage": "https://github.com/pipelinephp/Pipeline.Pipeline",
+    "homepage": "https://github.com/relayphp/Relay.Relay",
     "license": "MIT",
     "authors": [
         {
-            "name": "Pipeline.Pipeline Contributors",
-            "homepage": "https://github.com/pipelinephp/Pipeline.Pipeline/contributors"
+            "name": "Relay.Relay Contributors",
+            "homepage": "https://github.com/relayphp/Relay.Relay/contributors"
         }
     ],
     "require": {
@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Pipeline\\Pipeline\\": "src/"
+            "Relay\\Relay\\": "src/"
         }
     },
     "require-dev": {
@@ -28,7 +28,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Pipeline\\Pipeline\\": "tests/"
+            "Relay\\Relay\\": "tests/"
         }
     }
 }

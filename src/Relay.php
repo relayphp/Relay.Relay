@@ -1,14 +1,14 @@
 <?php
 /**
  *
- * This file is part of Pipeline for PHP.
+ * This file is part of Relay for PHP.
  *
  * @license http://opensource.org/licenses/MIT MIT
  *
  * @copyright 2015, Paul M. Jones
  *
  */
-namespace Pipeline\Pipeline;
+namespace Relay\Relay;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -17,10 +17,10 @@ use Psr\Http\Message\ResponseInterface as Response;
  *
  * A PSR-7 middleware dispatcher.
  *
- * @package Pipeline.Pipeline
+ * @package Relay.Relay
  *
  */
-class Pipeline
+class Relay
 {
     /**
      *
