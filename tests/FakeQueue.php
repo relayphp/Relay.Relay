@@ -1,5 +1,5 @@
 <?php
-namespace Relay\Relay;
+namespace Relay;
 
 class FakeQueue implements GetArrayCopyInterface
 {

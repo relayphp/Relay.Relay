@@ -1,5 +1,5 @@
 <?php
-namespace Relay\Relay;
+namespace Relay;
 
 use Zend\Diactoros\ServerRequestFactory;
 use Zend\Diactoros\Response;
@@ -28,9 +28,9 @@ class RelayTest extends \PHPUnit_Framework_TestCase
     {
         FakeMiddleware::$count = 0;
 
-        $queue[] = 'Relay\Relay\FakeMiddleware';
-        $queue[] = 'Relay\Relay\FakeMiddleware';
-        $queue[] = 'Relay\Relay\FakeMiddleware';
+        $queue[] = 'Relay\FakeMiddleware';
+        $queue[] = 'Relay\FakeMiddleware';
+        $queue[] = 'Relay\FakeMiddleware';
 
         $resolver = function ($class) {
             return new $class();

@@ -8,7 +8,7 @@
  * @copyright 2015, Paul M. Jones
  *
  */
-namespace Relay\Relay;
+namespace Relay;
 
 use ArrayObject;
 use InvalidArgumentException;

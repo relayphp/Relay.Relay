@@ -8,7 +8,7 @@
  * @copyright 2015, Paul M. Jones
  *
  */
-namespace Relay\Relay;
+namespace Relay;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;

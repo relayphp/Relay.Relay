@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Relay\\Relay\\": "src/"
+            "Relay\\": "src/"
         }
     },
     "require-dev": {
@@ -28,7 +28,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Relay\\Relay\\": "tests/"
+            "Relay\\": "tests/"
         }
     }
 }
