@@ -68,11 +68,13 @@ class Runner
      * @return Response
      *
      */
-    public function __invoke(Request $request, Response $response)
+    public function __invoke()
     {
         $entry = array_shift($this->queue);
-        $middleware = $this->resolve($entry);
-        return $middleware($request, $response, $this);
+        $middle = $this->resolve($entry);
+        $params = func_get_args();
+        $params[] = $this;
+        return call_user_func_array($middle, $params);
     }
 
     /**
@@ -87,7 +89,8 @@ class Runner
     protected function resolve($entry)
     {
         if (! $entry) {
-            // the default callable when the queue is empty
+            // the default callable when the queue is empty.
+            // different for client and server though. :-/
             return function (
                 Request $request,
                 Response $response,

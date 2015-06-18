@@ -56,9 +56,10 @@ class Relay
      * @return Response
      *
      */
-    public function __invoke(Request $request, Response $response)
+    public function __invoke()
     {
         $runner = $this->runnerFactory->newInstance();
-        return $runner($request, $response);
+        $params = func_get_args();
+        return call_user_func_array($runner, $params);
     }
 }
