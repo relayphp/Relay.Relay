@@ -4,9 +4,9 @@ namespace Relay;
 use Zend\Diactoros\ServerRequestFactory;
 use Zend\Diactoros\Response;
 
-class RelayTest extends \PHPUnit_Framework_TestCase
+class RunnerTest extends \PHPUnit_Framework_TestCase
 {
-    public function test()
+    public function testWithoutResolver()
     {
         FakeMiddleware::$count = 0;
 
@@ -14,23 +14,35 @@ class RelayTest extends \PHPUnit_Framework_TestCase
         $queue[] = new FakeMiddleware();
         $queue[] = new FakeMiddleware();
 
-        $relayBuilder = new RelayBuilder();
-        $relay = $relayBuilder->newInstance($queue);
-
-        // run the first time
-        $response = $relay(
+        $runner = new Runner($queue);
+        $response = $runner(
             ServerRequestFactory::fromGlobals(),
             new Response()
         );
+
         $actual = (string) $response->getBody();
         $this->assertSame('123456', $actual);
+    }
 
-        // run again
-        $response = $relay(
+    public function testWithResolver()
+    {
+        FakeMiddleware::$count = 0;
+
+        $queue[] = 'Relay\FakeMiddleware';
+        $queue[] = 'Relay\FakeMiddleware';
+        $queue[] = 'Relay\FakeMiddleware';
+
+        $resolver = function ($class) {
+            return new $class();
+        };
+
+        $runner = new Runner($queue, $resolver);
+        $response = $runner(
             ServerRequestFactory::fromGlobals(),
             new Response()
         );
+
         $actual = (string) $response->getBody();
-        $this->assertSame('789101112', $actual);
+        $this->assertSame('123456', $actual);
     }
 }
