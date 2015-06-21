@@ -68,13 +68,11 @@ class Runner
      * @return Response
      *
      */
-    public function __invoke()
+    public function __invoke(Request $request, Response $response)
     {
         $entry = array_shift($this->queue);
         $middle = $this->resolve($entry);
-        $params = func_get_args();
-        $params[] = $this;
-        return call_user_func_array($middle, $params);
+        return $middle($request, $response, $this);
     }
 
     /**
