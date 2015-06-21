@@ -39,7 +39,7 @@ class RelayBuilder
 
     /**
      *
-     * Returns a new Pipline instance.
+     * Returns a new Relay instance.
      *
      * @param array|ArrayObject|GetArrayCopyInterface $queue The queue for the
      * Relay.
