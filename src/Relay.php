@@ -10,12 +10,12 @@
  */
 namespace Relay;
 
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
  *
- * A PSR-7 middleware dispatcher.
+ * A reusable PSR-7 middleware dispatcher.
  *
  * @package Relay.Relay
  *
@@ -24,83 +24,41 @@ class Relay
 {
     /**
      *
-     * The middleware queue.
+     * A factory to create Runner objects.
      *
-     * @var array
-     *
-     */
-    protected $queue = [];
-
-    /**
-     *
-     * A callable to convert queue entries to callables.
-     *
-     * @var callable
+     * @var RunnerFactory
      *
      */
-    protected $resolver;
+    protected $runnerFactory;
 
     /**
      *
      * Constructor.
      *
-     * @param array $queue The middleware queue.
-     *
-     * @param callable $resolver Converts queue entries to callables.
+     * @param RunnerFactory $runnerFactory A factory to create Runner objects.
      *
      * @return self
      *
      */
-    public function __construct(array $queue, callable $resolver = null)
+    public function __construct(RunnerFactory $runnerFactory)
     {
-        $this->queue = $queue;
-        $this->resolver = $resolver;
+        $this->runnerFactory = $runnerFactory;
     }
 
     /**
      *
-     * Calls the next entry in the queue.
+     * Starts a Relay Runner.
      *
-     * @param Request $request The incoming request.
+     * @param Request $request The request.
      *
-     * @param Response $response The outgoing response.
+     * @param Response $response The response.
      *
      * @return Response
      *
      */
     public function __invoke(Request $request, Response $response)
     {
-        $entry = array_shift($this->queue);
-        $middleware = $this->resolve($entry);
-        return $middleware($request, $response, $this);
-    }
-
-    /**
-     *
-     * Converts a queue entry to a callable, using the resolver if present.
-     *
-     * @param mixed $entry The queue entry.
-     *
-     * @return callable
-     *
-     */
-    protected function resolve($entry)
-    {
-        if (! $entry) {
-            // the default callable when the queue is empty
-            return function (
-                Request $request,
-                Response $response,
-                callable $next
-            ) {
-                return $response;
-            };
-        }
-
-        if (! $this->resolver) {
-            return $entry;
-        }
-
-        return call_user_func($this->resolver, $entry);
+        $runner = $this->runnerFactory->newInstance();
+        return $runner($request, $response);
     }
 }

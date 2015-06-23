@@ -24,6 +24,15 @@ class RelayBuilder
 {
     /**
      *
+     * A callable to convert queue entries to callables.
+     *
+     * @var callable
+     *
+     */
+    protected $resolver;
+
+    /**
+     *
      * Constructor.
      *
      * @param callable $resolver A resolver to convert queue entries to
@@ -42,14 +51,17 @@ class RelayBuilder
      * Returns a new Relay instance.
      *
      * @param array|ArrayObject|GetArrayCopyInterface $queue The queue for the
-     * Relay.
+     * Relay Runner object.
      *
      * @return Relay
      *
      */
     public function newInstance($queue)
     {
-        return new Relay($this->getArray($queue), $this->resolver);
+        return new Relay(new RunnerFactory(
+            $this->getArray($queue),
+            $this->resolver
+        ));
     }
 
     /**
