@@ -15,7 +15,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 /**
  *
- * A PSR-7 middleware dispatcher.
+ * A single-use PSR-7 middleware dispatcher.
  *
  * @package Relay.Relay
  *
