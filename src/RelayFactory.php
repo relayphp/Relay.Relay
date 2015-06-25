@@ -3,6 +3,9 @@ namespace Relay;
 
 class RelayFactory
 {
+    protected $queue;
+    protected $resolver;
+
     public function __construct(array $queue, $resolver = null)
     {
         $this->queue = $queue;
