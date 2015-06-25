@@ -6,7 +6,7 @@ use Zend\Diactoros\Response;
 
 class RelayTest extends \PHPUnit_Framework_TestCase
 {
-    public function testWithoutResolver()
+    public function test()
     {
         FakeMiddleware::$count = 0;
 
@@ -14,35 +14,23 @@ class RelayTest extends \PHPUnit_Framework_TestCase
         $queue[] = new FakeMiddleware();
         $queue[] = new FakeMiddleware();
 
-        $dispatcher = new Relay($queue);
-        $response = $dispatcher(
+        $builder = new RelayBuilder();
+        $relay = $builder->newInstance($queue);
+
+        // relay once
+        $response = $relay(
             ServerRequestFactory::fromGlobals(),
             new Response()
         );
-
         $actual = (string) $response->getBody();
         $this->assertSame('123456', $actual);
-    }
 
-    public function testWithResolver()
-    {
-        FakeMiddleware::$count = 0;
-
-        $queue[] = 'Relay\FakeMiddleware';
-        $queue[] = 'Relay\FakeMiddleware';
-        $queue[] = 'Relay\FakeMiddleware';
-
-        $resolver = function ($class) {
-            return new $class();
-        };
-
-        $dispatcher = new Relay($queue, $resolver);
-        $response = $dispatcher(
+        // relay again
+        $response = $relay(
             ServerRequestFactory::fromGlobals(),
             new Response()
         );
-
         $actual = (string) $response->getBody();
-        $this->assertSame('123456', $actual);
+        $this->assertSame('789101112', $actual);
     }
 }

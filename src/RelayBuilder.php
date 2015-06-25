@@ -15,7 +15,7 @@ use InvalidArgumentException;
 
 /**
  *
- * Builds a Relay object.
+ * A builder to create Relay objects.
  *
  * @package Relay.Relay
  *
@@ -24,10 +24,19 @@ class RelayBuilder
 {
     /**
      *
+     * A callable to convert queue entries to callables in the Runner.
+     *
+     * @var callable
+     *
+     */
+    protected $resolver;
+
+    /**
+     *
      * Constructor.
      *
-     * @param callable $resolver A resolver to convert queue entries to
-     * callables.
+     * @param callable $resolver A callable to convert queue entries to
+     * callables in the Runner.
      *
      * @return self
      *
@@ -39,22 +48,40 @@ class RelayBuilder
 
     /**
      *
-     * Returns a new Relay instance.
+     * Creates a new Relay with the specified queue for its Runner objects.
      *
-     * @param array|ArrayObject|GetArrayCopyInterface $queue The queue for the
-     * Relay.
+     * @param array|ArrayObject|GetArrayCopyInterface $queue The queue
+     * specification.
      *
      * @return Relay
      *
      */
     public function newInstance($queue)
     {
-        return new Relay($this->getArray($queue), $this->resolver);
+        return new Relay($this->newRunnerFactory($queue));
     }
 
     /**
      *
-     * Converts a queue specification to an array.
+     * Creates a new RunnerFactory with a specified queue.
+     *
+     * @param array|ArrayObject|GetArrayCopyInterface $queue The queue
+     * specification.
+     *
+     * @return RunnerFactory
+     *
+     */
+    protected function newRunnerFactory($queue)
+    {
+        return new RunnerFactory(
+            $this->getArray($queue),
+            $this->resolver
+        );
+    }
+
+    /**
+     *
+     * Converts the queue specification to an array.
      *
      * @param array|ArrayObject|GetArrayCopyInterface $queue The queue
      * specification.
