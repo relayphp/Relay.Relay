@@ -15,10 +15,15 @@ class ReusableRelayBuilder
 
     public function newInstance($queue)
     {
-        return new ReusableRelay(new RelayFactory(
+        return new ReusableRelay($this->newRelayFactory($queue));
+    }
+
+    protected function newRelayFactory($queue)
+    {
+        return new RelayFactory(
             $this->getArray($queue),
             $this->resolver
-        ));
+        );
     }
 
     protected function getArray($queue)
