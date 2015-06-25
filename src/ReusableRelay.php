@@ -6,6 +6,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 class ReusableRelay
 {
+    protected $relayFactory;
+
     public function __construct(RelayFactory $relayFactory)
     {
         $this->relayFactory = $relayFactory;
