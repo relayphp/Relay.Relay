@@ -26,7 +26,7 @@ class Runner
      *
      * The middleware queue.
      *
-     * @var array
+     * @var (callable|MiddlewareInterface)[]
      *
      */
     protected $queue = [];
@@ -35,7 +35,7 @@ class Runner
      *
      * A callable to convert queue entries to callables.
      *
-     * @var callable
+     * @var callable|ResolverInterface
      *
      */
     protected $resolver;
@@ -44,9 +44,9 @@ class Runner
      *
      * Constructor.
      *
-     * @param array $queue The middleware queue.
+     * @param (callable|mixed|MiddlewareInterface)[] $queue The middleware queue.
      *
-     * @param callable $resolver Converts queue entries to callables.
+     * @param callable|ResolverInterface $resolver Converts queue entries to callables.
      *
      * @return self
      *
@@ -79,9 +79,9 @@ class Runner
      *
      * Converts a queue entry to a callable, using the resolver if present.
      *
-     * @param mixed $entry The queue entry.
+     * @param mixed|callable|MiddlewareInterface $entry The queue entry.
      *
-     * @return callable
+     * @return callable|MiddlewareInterface
      *
      */
     protected function resolve($entry)
