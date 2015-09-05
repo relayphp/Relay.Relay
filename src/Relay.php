@@ -37,8 +37,6 @@ class Relay
      *
      * @param RunnerFactory $runnerFactory A factory to create Runner objects.
      *
-     * @return self
-     *
      */
     public function __construct(RunnerFactory $runnerFactory)
     {
