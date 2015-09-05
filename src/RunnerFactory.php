@@ -23,7 +23,7 @@ class RunnerFactory
      *
      * The middleware queue.
      *
-     * @var array
+     * @var (callable|mixed|MiddlewareInterface)[]
      *
      */
     protected $queue = [];
@@ -32,7 +32,7 @@ class RunnerFactory
      *
      * A callable to convert queue entries to callables.
      *
-     * @var callable
+     * @var callable|ResolverInterface
      *
      */
     protected $resolver;
@@ -41,9 +41,10 @@ class RunnerFactory
      *
      * Constructor.
      *
-     * @param array $queue The middleware queue.
+     * @param (callable|mixed|MiddlewareInterface)[] $queue The middleware queue.
      *
-     * @param callable $resolver Converts queue entries to callables.
+     * @param callable|ResolverInterface $resolver Converts queue entries to
+     *                                             callable|MiddlewareInterface
      *
      * @return self
      *
