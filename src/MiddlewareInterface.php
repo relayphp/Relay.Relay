@@ -15,11 +15,11 @@ use Psr\Http\Message\ResponseInterface as Response;
 interface MiddlewareInterface
 {
     /**
-     * @param Request                           $request  the request
-     * @param Response                          $response the response
-     * @param callable|MiddlewareInterface|null $next     the next middleware
+     * @param Request                      $request  the request
+     * @param Response                     $response the response
+     * @param callable|MiddlewareInterface $next     the next middleware
      *
      * @return Response
      */
-    public function __invoke(Request $request, Response $response, callable $next = null);
+    public function __invoke(Request $request, Response $response, callable $next);
 }
