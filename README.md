@@ -10,4 +10,4 @@ This package requires PHP 5.5 or later; it has been tested on PHP 5.6, PHP 7, an
 
 To run the tests, issue `composer install` to install the test dependencies, then issue `phpunit`.
 
-Please see <http://relayphp.github.io> for documentation.
+Please see <http://relayphp.com> for documentation.
