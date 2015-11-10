@@ -4,7 +4,7 @@ namespace Relay;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class FakeMiddleware
+class FakeMiddleware implements MiddlewareInterface
 {
     public static $count = 0;
 

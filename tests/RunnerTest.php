@@ -32,9 +32,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         $queue[] = 'Relay\FakeMiddleware';
         $queue[] = 'Relay\FakeMiddleware';
 
-        $resolver = function ($class) {
-            return new $class();
-        };
+        $resolver = new FakeResolver();
 
         $runner = new Runner($queue, $resolver);
         $response = $runner(
