@@ -10,8 +10,8 @@
  */
 namespace Relay;
 
-use Psr\Http\Message\RequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  *
@@ -26,18 +26,21 @@ class Last implements MiddlewareInterface
      *
      * Bounces the Response back through the middleware queue.
      *
-     * @param Request $request The request.
+     * @param RequestInterface $request The request.
      *
-     * @param Response $response The response.
+     * @param ResponseInterface $response The response.
      *
      * @param callable|MiddlewareInterface $next The next middleware (which will
      * not be called).
      *
-     * @return Response
+     * @return ResponseInterface
      *
      */
-    public function __invoke(Request $request, Response $response, callable $next)
-    {
+    public function __invoke(
+        RequestInterface $request,
+        ResponseInterface $response,
+        callable $next
+    ) {
         return $response;
     }
 }

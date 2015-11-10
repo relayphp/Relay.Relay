@@ -10,8 +10,8 @@
  */
 namespace Relay;
 
-use Psr\Http\Message\RequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  *
@@ -60,14 +60,14 @@ class Runner
      *
      * Calls the next entry in the queue.
      *
-     * @param Request $request The request.
+     * @param RequestInterface $request The request.
      *
-     * @param Response $response The response.
+     * @param ResponseInterface $response The response.
      *
-     * @return Response
+     * @return ResponseInterface
      *
      */
-    public function __invoke(Request $request, Response $response)
+    public function __invoke(RequestInterface $request, ResponseInterface $response)
     {
         $entry = array_shift($this->queue);
         $middleware = $this->resolve($entry);
@@ -78,14 +78,14 @@ class Runner
      *
      * Calls the next entry in the queue; essentially an alias to `__invoke()`.
      *
-     * @param Request $request The request.
+     * @param RequestInterface $request The request.
      *
-     * @param Response $response The response.
+     * @param ResponseInterface $response The response.
      *
-     * @return Response
+     * @return ResponseInterface
      *
      */
-    public function run(Request $request, Response $response)
+    public function run(RequestInterface $request, ResponseInterface $response)
     {
         return $this($request, $response);
     }
@@ -94,7 +94,7 @@ class Runner
      *
      * Converts a queue entry to a callable, using the resolver if present.
      *
-     * @param mixed|callable|MiddlewareInterface $entry The queue entry.
+     * @param mixed $entry The queue entry.
      *
      * @return callable|MiddlewareInterface
      *

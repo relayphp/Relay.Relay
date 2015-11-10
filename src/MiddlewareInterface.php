@@ -10,8 +10,8 @@
  */
 namespace Relay;
 
-use Psr\Http\Message\RequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  *
@@ -30,14 +30,18 @@ interface MiddlewareInterface
      *
      * Invokes the middleware.
      *
-     * @param Request $request The request.
+     * @param RequestInterface $request The request.
      *
-     * @param Response $response The response.
+     * @param ResponseInterface $response The response.
      *
      * @param callable|MiddlewareInterface $next The next middleware.
      *
-     * @return Response
+     * @return ResponseInterface
      *
      */
-    public function __invoke(Request $request, Response $response, callable $next);
+    public function __invoke(
+        RequestInterface $request,
+        ResponseInterface $response,
+        callable $next
+    );
 }
