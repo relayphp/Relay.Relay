@@ -30,7 +30,7 @@ class RunnerFactory
 
     /**
      *
-     * A callable to convert queue entries to callables.
+     * Converts queue entries to middleware callables.
      *
      * @var callable|ResolverInterface
      *
@@ -55,7 +55,7 @@ class RunnerFactory
 
     /**
      *
-     * Creates a new Runner.
+     * Returns a new Runner.
      *
      * @return Runner
      *

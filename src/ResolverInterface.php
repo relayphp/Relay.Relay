@@ -25,7 +25,7 @@ interface ResolverInterface
 {
     /**
      *
-     * Convers a queue entry to a middleware callable.
+     * Converts a queue entry to a middleware callable.
      *
      * @param mixed $entry The queue entry.
      *
