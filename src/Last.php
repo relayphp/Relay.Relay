@@ -30,6 +30,9 @@ class Last implements MiddlewareInterface
      *
      * @param Response $response The response.
      *
+     * @param callable|MiddlewareInterface $next The next middleware (which will
+     * not be called).
+     *
      * @return Response
      *
      */
