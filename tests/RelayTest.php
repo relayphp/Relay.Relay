@@ -18,7 +18,7 @@ class RelayTest extends \PHPUnit_Framework_TestCase
         $relay = $builder->newInstance($queue);
 
         // relay once
-        $response = $relay(
+        $response = $relay->run(
             ServerRequestFactory::fromGlobals(),
             new Response()
         );

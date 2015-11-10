@@ -15,7 +15,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         $queue[] = new FakeMiddleware();
 
         $runner = new Runner($queue);
-        $response = $runner(
+        $response = $runner->run(
             ServerRequestFactory::fromGlobals(),
             new Response()
         );

@@ -59,4 +59,20 @@ class Relay
         $runner = $this->runnerFactory->newInstance();
         return $runner($request, $response);
     }
+
+    /**
+     *
+     * Dispatches to a new Runner; essentially an alias to `__invoke()`.
+     *
+     * @param Request $request The request.
+     *
+     * @param Response $response The response.
+     *
+     * @return Response
+     *
+     */
+    public function run(Request $request, Response $response)
+    {
+        return $this($request, $response);
+    }
 }
