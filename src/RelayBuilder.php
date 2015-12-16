@@ -12,6 +12,7 @@ namespace Relay;
 
 use ArrayObject;
 use InvalidArgumentException;
+use Traversable;
 
 /**
  *
@@ -50,7 +51,7 @@ class RelayBuilder
      *
      * Creates a new Relay with the specified queue for its Runner objects.
      *
-     * @param array|ArrayObject|GetArrayCopyInterface $queue The queue
+     * @param array|Traversable|GetArrayCopyInterface $queue The queue
      * specification.
      *
      * @return Relay
@@ -65,7 +66,7 @@ class RelayBuilder
      *
      * Creates a new RunnerFactory with a specified queue.
      *
-     * @param array|ArrayObject|GetArrayCopyInterface $queue The queue
+     * @param array|Traversable|GetArrayCopyInterface $queue The queue
      * specification.
      *
      * @return RunnerFactory
@@ -83,7 +84,7 @@ class RelayBuilder
      *
      * Converts the queue specification to an array.
      *
-     * @param array|ArrayObject|GetArrayCopyInterface $queue The queue
+     * @param array|Traversable|GetArrayCopyInterface $queue The queue
      * specification.
      *
      * @return array
@@ -100,6 +101,10 @@ class RelayBuilder
 
         if ($getArrayCopy) {
             return $queue->getArrayCopy();
+        }
+
+        if ($queue instanceof Traversable) {
+            return iterator_to_array($queue);
         }
 
         throw new InvalidArgumentException();
