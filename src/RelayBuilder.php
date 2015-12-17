@@ -37,7 +37,7 @@ class RelayBuilder
      * Constructor.
      *
      * @param callable|ResolverInterface $resolver A callable to convert a queue entry to
-     *                                             a callable|MiddlewareInterface in the Runner.
+     * a callable|MiddlewareInterface in the Runner.
      *
      * @return self
      *
@@ -51,8 +51,8 @@ class RelayBuilder
      *
      * Creates a new Relay with the specified queue for its Runner objects.
      *
-     * @param array|Traversable|GetArrayCopyInterface $queue The queue
-     * specification.
+     * @param array|ArrayObject|GetArrayCopyInterface|Traversable $queue The
+     * queue specification.
      *
      * @return Relay
      *
@@ -66,8 +66,8 @@ class RelayBuilder
      *
      * Creates a new RunnerFactory with a specified queue.
      *
-     * @param array|Traversable|GetArrayCopyInterface $queue The queue
-     * specification.
+     * @param array|ArrayObject|GetArrayCopyInterface|Traversable $queue The
+     * queue specification.
      *
      * @return RunnerFactory
      *
@@ -84,8 +84,8 @@ class RelayBuilder
      *
      * Converts the queue specification to an array.
      *
-     * @param array|Traversable|GetArrayCopyInterface $queue The queue
-     * specification.
+     * @param array|ArrayObject|GetArrayCopyInterface|Traversable $queue The
+     * queue specification.
      *
      * @return array
      *
