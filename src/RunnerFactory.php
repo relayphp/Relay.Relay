@@ -47,8 +47,6 @@ class RunnerFactory
      * @param callable|ResolverInterface $resolver Converts queue entries to
      * callables or implementations of MiddlewareInterface.
      *
-     * @return self
-     *
      */
     public function __construct(array $queue, $resolver = null)
     {

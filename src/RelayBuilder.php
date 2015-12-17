@@ -39,8 +39,6 @@ class RelayBuilder
      * @param callable|ResolverInterface $resolver A callable to convert a queue entry to
      * a callable|MiddlewareInterface in the Runner.
      *
-     * @return self
-     *
      */
     public function __construct(callable $resolver = null)
     {

@@ -48,8 +48,6 @@ class Runner
      *
      * @param callable|ResolverInterface $resolver Converts queue entries to callables.
      *
-     * @return self
-     *
      */
     public function __construct(array $queue, callable $resolver = null)
     {
