@@ -30,7 +30,8 @@ class RunnerFactory
 
     /**
      *
-     * Converts queue entries to middleware callables.
+     * A callable to convert queue entries to callables or implementations of
+     * MiddlewareInterface.
      *
      * @var callable|ResolverInterface
      *
@@ -44,7 +45,7 @@ class RunnerFactory
      * @param (callable|MiddlewareInterface)[] $queue The middleware queue.
      *
      * @param callable|ResolverInterface $resolver Converts queue entries to
-     * middleware callables.
+     * callables or implementations of MiddlewareInterface.
      *
      */
     public function __construct(array $queue, $resolver = null)

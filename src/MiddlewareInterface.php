@@ -15,11 +15,11 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  *
- * Formally defines the middleware interface signature required by Relay.
+ * This interface defines the middleware interface signature required by Relay.
  *
- * Implementing this is completely voluntary. It is useful for indicating that
- * a class is intended for use as middleware, and to ensure the `__invoke()`
- * method is typehinted correctly.
+ * Implementing this is completely voluntary, it's mostly useful for indicating that
+ * your class is middleware, and to ensure you type-hint the `__invoke()` method
+ * signature correctly.
  *
  * @package Relay.Relay
  *
@@ -28,15 +28,15 @@ interface MiddlewareInterface
 {
     /**
      *
-     * Invokes the middleware.
+     * Middleware logic to be invoked.
      *
-     * @param RequestInterface $request The request.
+     * @param Request $request The request.
      *
-     * @param ResponseInterface $response The response.
+     * @param Response $response The response.
      *
      * @param callable|MiddlewareInterface $next The next middleware.
      *
-     * @return ResponseInterface
+     * @return Response
      *
      */
     public function __invoke(

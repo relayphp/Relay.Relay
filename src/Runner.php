@@ -46,8 +46,7 @@ class Runner
      *
      * @param (callable|MiddlewareInterface)[] $queue The middleware queue.
      *
-     * @param callable|ResolverInterface $resolver Converts queue entries to
-     * middleware callables.
+     * @param callable|ResolverInterface $resolver Converts queue entries to callables.
      *
      */
     public function __construct(array $queue, callable $resolver = null)
