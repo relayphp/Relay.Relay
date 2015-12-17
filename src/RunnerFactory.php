@@ -42,7 +42,7 @@ class RunnerFactory
      *
      * Constructor.
      *
-     * @param (callable|mixed|MiddlewareInterface)[] $queue The middleware queue.
+     * @param (callable|MiddlewareInterface)[] $queue The middleware queue.
      *
      * @param callable|ResolverInterface $resolver Converts queue entries to
      * callables or implementations of MiddlewareInterface.
