@@ -10,7 +10,7 @@
  */
 namespace Relay;
 
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -47,14 +47,14 @@ class Relay
      *
      * Dispatches to a new Runner.
      *
-     * @param RequestInterface $request The request.
+     * @param ServerRequestInterface $request The request.
      *
      * @param ResponseInterface $response The response.
      *
      * @return ResponseInterface
      *
      */
-    public function __invoke(RequestInterface $request, ResponseInterface $response)
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response)
     {
         $runner = $this->runnerFactory->newInstance();
         return $runner($request, $response);
@@ -64,14 +64,14 @@ class Relay
      *
      * Dispatches to a new Runner; essentially an alias to `__invoke()`.
      *
-     * @param RequestInterface $request The request.
+     * @param ServerRequestInterface $request The request.
      *
      * @param ResponseInterface $response The response.
      *
      * @return ResponseInterface
      *
      */
-    public function run(RequestInterface $request, ResponseInterface $response)
+    public function run(ServerRequestInterface $request, ResponseInterface $response)
     {
         return $this($request, $response);
     }

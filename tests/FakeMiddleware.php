@@ -1,7 +1,7 @@
 <?php
 namespace Relay;
 
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class FakeMiddleware implements MiddlewareInterface
@@ -9,7 +9,7 @@ class FakeMiddleware implements MiddlewareInterface
     public static $count = 0;
 
     public function __invoke(
-        RequestInterface $request,
+        ServerRequestInterface $request,
         ResponseInterface $response,
         callable $next
     ) {

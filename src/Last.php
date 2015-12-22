@@ -10,7 +10,7 @@
  */
 namespace Relay;
 
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -26,7 +26,7 @@ class Last implements MiddlewareInterface
      *
      * Bounces the Response back through the middleware queue.
      *
-     * @param RequestInterface $request The request.
+     * @param ServerRequestInterface $request The request.
      *
      * @param ResponseInterface $response The response.
      *
@@ -37,7 +37,7 @@ class Last implements MiddlewareInterface
      *
      */
     public function __invoke(
-        RequestInterface $request,
+        ServerRequestInterface $request,
         ResponseInterface $response,
         callable $next
     ) {

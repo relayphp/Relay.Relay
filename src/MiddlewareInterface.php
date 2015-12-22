@@ -10,7 +10,7 @@
  */
 namespace Relay;
 
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -40,7 +40,7 @@ interface MiddlewareInterface
      *
      */
     public function __invoke(
-        RequestInterface $request,
+        ServerRequestInterface $request,
         ResponseInterface $response,
         callable $next
     );
