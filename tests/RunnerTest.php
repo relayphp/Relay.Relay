@@ -43,4 +43,19 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         $actual = (string) $response->getBody();
         $this->assertSame('123456', $actual);
     }
+
+    public function testUnexpectedValue()
+    {
+        $this->setExpectedException('UnexpectedValueException');
+
+        $queue[] = function () {
+            return;
+        };
+
+        $runner = new Runner($queue);
+        $runner->run(
+            ServerRequestFactory::fromGlobals(),
+            new Response()
+        );
+    }
 }

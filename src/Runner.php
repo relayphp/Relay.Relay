@@ -12,6 +12,7 @@ namespace Relay;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use UnexpectedValueException;
 
 /**
  *
@@ -65,12 +66,21 @@ class Runner
      *
      * @return ResponseInterface
      *
+     * @throws \UnexpectedValueException Middleware must return instance of ResponseInterface.
+     *
      */
     public function __invoke(RequestInterface $request, ResponseInterface $response)
     {
         $entry = array_shift($this->queue);
         $middleware = $this->resolve($entry);
-        return $middleware($request, $response, $this);
+
+        $return = $middleware($request, $response, $this);
+
+        if(!$return instanceof ResponseInterface) {
+            throw new UnexpectedValueException('Did you forget to return response from middleware?');
+        }
+
+        return $return;
     }
 
     /**
