@@ -76,8 +76,8 @@ class Runner
 
         $return = $middleware($request, $response, $this);
 
-        if(!$return instanceof ResponseInterface) {
-            throw new UnexpectedValueException('Did you forget to return response from middleware?');
+        if(! $return instanceof ResponseInterface) {
+            throw new UnexpectedValueException("Middleware must return Response object.");
         }
 
         return $return;
