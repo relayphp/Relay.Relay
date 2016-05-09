@@ -10,7 +10,7 @@
  */
 namespace Relay;
 
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use UnexpectedValueException;
 
@@ -60,7 +60,7 @@ class Runner
      *
      * Calls the next entry in the queue.
      *
-     * @param RequestInterface $request The request.
+     * @param ServerRequestInterface $request The request.
      *
      * @param ResponseInterface $response The response.
      *
@@ -69,7 +69,7 @@ class Runner
      * @throws \UnexpectedValueException Middleware must return instance of ResponseInterface.
      *
      */
-    public function __invoke(RequestInterface $request, ResponseInterface $response)
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response)
     {
         $entry = array_shift($this->queue);
         $middleware = $this->resolve($entry);
@@ -87,14 +87,14 @@ class Runner
      *
      * Calls the next entry in the queue; essentially an alias to `__invoke()`.
      *
-     * @param RequestInterface $request The request.
+     * @param ServerRequestInterface $request The request.
      *
      * @param ResponseInterface $response The response.
      *
      * @return ResponseInterface
      *
      */
-    public function run(RequestInterface $request, ResponseInterface $response)
+    public function run(ServerRequestInterface $request, ResponseInterface $response)
     {
         return $this($request, $response);
     }
