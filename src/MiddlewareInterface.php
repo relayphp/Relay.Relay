@@ -30,13 +30,14 @@ interface MiddlewareInterface
      *
      * Middleware logic to be invoked.
      *
-     * @param Request $request The request.
+     * @param RequestInterface  $request The request.
      *
-     * @param Response $response The response.
+     * @param ResponseInterface $response The response.
      *
-     * @param callable|MiddlewareInterface $next The next middleware.
+     * @param callable $next delegate function to dispatch the next middleware component:
+     *                       function (RequestInterface $request, ResponseInterface $response): ResponseInterface
      *
-     * @return Response
+     * @return ResponseInterface
      *
      */
     public function __invoke(
