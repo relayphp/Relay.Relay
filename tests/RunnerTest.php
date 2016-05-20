@@ -58,4 +58,29 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
             new Response()
         );
     }
+
+    public function testWithSubRunner()
+    {
+        FakeMiddleware::$count = 0;
+
+        $runner = new Runner([
+            new Runner([
+                new FakeMiddleware(),
+                new FakeMiddleware(),
+                new Runner([
+                    new FakeMiddleware(),
+                    new FakeMiddleware(),
+                ]),
+            ]),
+            new FakeMiddleware()
+        ]);
+
+        $response = $runner(
+            ServerRequestFactory::fromGlobals(),
+            new Response()
+        );
+
+        $actual = (string) $response->getBody();
+        $this->assertSame('12345678910', $actual);
+    }
 }
