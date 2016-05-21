@@ -23,7 +23,7 @@ class RelayTest extends \PHPUnit_Framework_TestCase
             new Response()
         );
         $actual = (string) $response->getBody();
-        $this->assertSame('123456', $actual);
+        $this->assertSame('1>2>3><3<2<1', $actual);
 
         // relay again
         $response = $relay(
@@ -31,6 +31,6 @@ class RelayTest extends \PHPUnit_Framework_TestCase
             new Response()
         );
         $actual = (string) $response->getBody();
-        $this->assertSame('789101112', $actual);
+        $this->assertSame('4>5>6><6<5<4', $actual);
     }
 }

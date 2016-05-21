@@ -21,7 +21,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         );
 
         $actual = (string) $response->getBody();
-        $this->assertSame('123456', $actual);
+        $this->assertSame('1>2>3><3<2<1', $actual);
     }
 
     public function testWithResolver()
@@ -41,7 +41,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         );
 
         $actual = (string) $response->getBody();
-        $this->assertSame('123456', $actual);
+        $this->assertSame('1>2>3><3<2<1', $actual);
     }
 
     public function testUnexpectedValue()
@@ -81,6 +81,6 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         );
 
         $actual = (string) $response->getBody();
-        $this->assertSame('12345678910', $actual);
+        $this->assertSame('1>2>3>4>5><5<4<3<2<1', $actual);
     }
 }
