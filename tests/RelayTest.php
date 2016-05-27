@@ -10,12 +10,14 @@ class RelayTest extends \PHPUnit_Framework_TestCase
     {
         FakeMiddleware::$count = 0;
 
-        $queue[] = new FakeMiddleware();
-        $queue[] = new FakeMiddleware();
-        $queue[] = new FakeMiddleware();
-        $queue[] = function ($request, $next) {
-            return new Response();
-        };
+        $queue = [
+            new FakeMiddleware(),
+            new FakeMiddleware(),
+            new FakeMiddleware(),
+            function ($request, $next) {
+                return new Response();
+            },
+        ];
 
         $builder = new RelayBuilder();
         $relay = $builder->newInstance($queue);
