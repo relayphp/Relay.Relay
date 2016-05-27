@@ -1,10 +1,16 @@
 <?php
 namespace Relay;
 
+use Closure;
+
 class FakeResolver implements ResolverInterface
 {
-    public function __invoke($class)
+    public function __invoke($entry)
     {
-        return new $class();
+        if ($entry instanceof Closure) {
+            return $entry;
+        }
+
+        return new $entry();
     }
 }

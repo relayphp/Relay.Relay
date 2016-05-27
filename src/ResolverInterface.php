@@ -22,7 +22,7 @@ namespace Relay;
  * a class is intended for use as a resolver, and to ensure the `__invoke()`
  * method is typehinted correctly.
  *
- * @package Relay.Relay
+ * @package relay/relay
  *
  */
 interface ResolverInterface

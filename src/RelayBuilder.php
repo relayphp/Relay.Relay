@@ -17,7 +17,7 @@ use Traversable;
  *
  * A builder to create Relay objects.
  *
- * @package Relay.Relay
+ * @package relay/relay
  *
  */
 class RelayBuilder
@@ -35,8 +35,8 @@ class RelayBuilder
      *
      * Constructor.
      *
-     * @param callable|ResolverInterface $resolver A callable to convert a queue entry to
-     * a callable|MiddlewareInterface in the Runner.
+     * @param callable|ResolverInterface $resolver A callable to convert a queue
+     * entry to a callable|MiddlewareInterface in the Runner.
      *
      */
     public function __construct(callable $resolver = null)
@@ -69,31 +69,14 @@ class RelayBuilder
      */
     protected function newRunnerFactory($queue)
     {
-        return new RunnerFactory(
-            $this->getArray($queue),
-            $this->resolver
-        );
-    }
-
-    /**
-     *
-     * Converts the queue specification to an array.
-     *
-     * @param array|Traversable $queue The queue specification.
-     *
-     * @return array
-     *
-     */
-    protected function getArray($queue)
-    {
-        if (is_array($queue)) {
-            return $queue;
-        }
-
         if ($queue instanceof Traversable) {
-            return iterator_to_array($queue);
+            $queue = iterator_to_array($queue);
         }
 
-        throw new InvalidArgumentException();
+        if (! is_array($queue)) {
+            throw Exception::invalidQueue();
+        }
+
+        return new RunnerFactory($queue, $this->resolver);
     }
 }

@@ -17,7 +17,7 @@ use Psr\Http\Message\ResponseInterface;
  *
  * A multiple-use PSR-7 middleware dispatcher.
  *
- * @package Relay.Relay
+ * @package relay/relay
  *
  */
 class Relay
@@ -45,23 +45,6 @@ class Relay
 
     /**
      *
-     * Dispatches to a new Runner.
-     *
-     * @param RequestInterface $request The request.
-     *
-     * @param ResponseInterface $response The response.
-     *
-     * @return ResponseInterface
-     *
-     */
-    public function __invoke(RequestInterface $request, ResponseInterface $response)
-    {
-        $runner = $this->runnerFactory->newInstance();
-        return $runner($request, $response);
-    }
-
-    /**
-     *
      * Dispatches to a new Runner; essentially an alias to `__invoke()`.
      *
      * @param RequestInterface $request The request.
@@ -71,8 +54,9 @@ class Relay
      * @return ResponseInterface
      *
      */
-    public function run(RequestInterface $request, ResponseInterface $response)
+    public function run(RequestInterface $request)
     {
-        return $this($request, $response);
+        $runner = $this->runnerFactory->newInstance();
+        return $runner($request);
     }
 }

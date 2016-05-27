@@ -27,9 +27,13 @@ class RelayBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Relay\Relay', $relay);
     }
 
-    public function testInvalidArgument()
+    public function testInvalidQueue()
     {
-        $this->setExpectedException('InvalidArgumentException');
+        $this->setExpectedException(
+            'Relay\Exception',
+            'The middleware queue must be an array or a Traversable.'
+        );
+
         $this->relayBuilder->newInstance('bad argument');
     }
 }

@@ -12,15 +12,16 @@ namespace Relay;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use RuntimeException;
 
 /**
  *
  * A single-use PSR-7 middleware dispatcher.
  *
- * @package Relay.Relay
+ * @package relay/relay
  *
  */
-class Runner
+class Runner implements RunnerInterface
 {
     /**
      *
@@ -46,7 +47,8 @@ class Runner
      *
      * @param (callable|MiddlewareInterface)[] $queue The middleware queue.
      *
-     * @param callable|ResolverInterface $resolver Converts queue entries to callables.
+     * @param callable|ResolverInterface $resolver Converts queue entries to
+     * callables.
      *
      */
     public function __construct(array $queue, callable $resolver = null)
@@ -57,20 +59,18 @@ class Runner
 
     /**
      *
-     * Calls the next entry in the queue.
+     * Runs the next entry in the queue.
      *
      * @param RequestInterface $request The request.
-     *
-     * @param ResponseInterface $response The response.
      *
      * @return ResponseInterface
      *
      */
-    public function __invoke(RequestInterface $request, ResponseInterface $response)
+    public function __invoke(RequestInterface $request)
     {
         $entry = array_shift($this->queue);
         $middleware = $this->resolve($entry);
-        return $middleware($request, $response, $this);
+        return $middleware($request, $this);
     }
 
     /**
@@ -79,14 +79,12 @@ class Runner
      *
      * @param RequestInterface $request The request.
      *
-     * @param ResponseInterface $response The response.
-     *
      * @return ResponseInterface
      *
      */
-    public function run(RequestInterface $request, ResponseInterface $response)
+    public function run(RequestInterface $request)
     {
-        return $this($request, $response);
+        return $this($request);
     }
 
     /**
@@ -97,11 +95,13 @@ class Runner
      *
      * @return callable|MiddlewareInterface
      *
+     * @throws RuntimeException when the queue is empty.
+     *
      */
     protected function resolve($entry)
     {
         if (! $entry) {
-            return $this->last();
+            throw Exception::emptyQueue();
         }
 
         if (! $this->resolver) {
@@ -109,17 +109,5 @@ class Runner
         }
 
         return call_user_func($this->resolver, $entry);
-    }
-
-    /**
-     *
-     * Returns a new instance of the Last middleware callable.
-     *
-     * @return Last
-     *
-     */
-    protected function last()
-    {
-        return new Last();
     }
 }

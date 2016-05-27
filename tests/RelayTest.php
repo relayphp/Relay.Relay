@@ -13,24 +13,21 @@ class RelayTest extends \PHPUnit_Framework_TestCase
         $queue[] = new FakeMiddleware();
         $queue[] = new FakeMiddleware();
         $queue[] = new FakeMiddleware();
+        $queue[] = function ($request, $next) {
+            return new Response();
+        };
 
         $builder = new RelayBuilder();
         $relay = $builder->newInstance($queue);
 
         // relay once
-        $response = $relay->run(
-            ServerRequestFactory::fromGlobals(),
-            new Response()
-        );
+        $response = $relay->run(ServerRequestFactory::fromGlobals());
         $actual = (string) $response->getBody();
-        $this->assertSame('123456', $actual);
+        $this->assertSame('123', $actual);
 
         // relay again
-        $response = $relay(
-            ServerRequestFactory::fromGlobals(),
-            new Response()
-        );
+        $response = $relay->run(ServerRequestFactory::fromGlobals());
         $actual = (string) $response->getBody();
-        $this->assertSame('789101112', $actual);
+        $this->assertSame('456', $actual);
     }
 }

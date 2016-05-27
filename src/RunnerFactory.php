@@ -14,7 +14,7 @@ namespace Relay;
  *
  * A factory to create (and re-create) Runner objects.
  *
- * @package Relay.Relay
+ * @package relay/relay
  *
  */
 class RunnerFactory

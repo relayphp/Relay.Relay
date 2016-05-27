@@ -21,7 +21,7 @@ use Psr\Http\Message\ResponseInterface;
  * that your class is middleware, and to ensure you type-hint the `__invoke()`
  * method signature correctly.
  *
- * @package Relay.Relay
+ * @package relay/relay
  *
  */
 interface MiddlewareInterface
@@ -32,16 +32,10 @@ interface MiddlewareInterface
      *
      * @param Request $request The request.
      *
-     * @param Response $response The response.
+     * @param callable|RunnerInterface $next The middleware runner.
      *
-     * @param callable|MiddlewareInterface $next The next middleware.
-     *
-     * @return Response
+     * @return ResponseInterface
      *
      */
-    public function __invoke(
-        RequestInterface $request,
-        ResponseInterface $response,
-        callable $next
-    );
+    public function __invoke(RequestInterface $request, callable $next);
 }

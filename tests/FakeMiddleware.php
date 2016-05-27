@@ -10,11 +10,9 @@ class FakeMiddleware implements MiddlewareInterface
 
     public function __invoke(
         RequestInterface $request,
-        ResponseInterface $response,
         callable $next
     ) {
-        $response->getBody()->write(++ static::$count);
-        $response = $next($request, $response);
+        $response = $next($request);
         $response->getBody()->write(++ static::$count);
         return $response;
     }
