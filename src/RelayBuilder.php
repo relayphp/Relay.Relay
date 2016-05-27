@@ -10,7 +10,6 @@
  */
 namespace Relay;
 
-use InvalidArgumentException;
 use Traversable;
 
 /**

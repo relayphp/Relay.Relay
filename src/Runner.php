@@ -12,7 +12,6 @@ namespace Relay;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use RuntimeException;
 
 /**
  *
@@ -70,7 +69,11 @@ class Runner implements RunnerInterface
     {
         $entry = array_shift($this->queue);
         $middleware = $this->resolve($entry);
-        return $middleware($request, $this);
+        $response = $middleware($request, $this);
+        if (! $response instanceof ResponseInterface) {
+            throw Exception::nonResponse();
+        }
+        return $response;
     }
 
     /**

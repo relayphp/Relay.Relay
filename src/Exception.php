@@ -44,4 +44,16 @@ class Exception extends \Exception
     {
         return new Exception('The middleware queue is empty.');
     }
+
+    /**
+     *
+     * Middleware returned something other than a response.
+     *
+     * @return Exception
+     *
+     */
+    static public function nonResponse()
+    {
+        return new Exception('Middleware must return a response.');
+    }
 }
