@@ -21,7 +21,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         );
 
         $actual = (string) $response->getBody();
-        $this->assertSame('123456', $actual);
+        $this->assertSame('1>2>3><3<2<1', $actual);
     }
 
     public function testWithResolver()
@@ -41,7 +41,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         );
 
         $actual = (string) $response->getBody();
-        $this->assertSame('123456', $actual);
+        $this->assertSame('1>2>3><3<2<1', $actual);
     }
 
     public function testUnexpectedValue()
@@ -57,5 +57,30 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
             ServerRequestFactory::fromGlobals(),
             new Response()
         );
+    }
+
+    public function testWithSubRunner()
+    {
+        FakeMiddleware::$count = 0;
+
+        $runner = new Runner([
+            new Runner([
+                new FakeMiddleware(),
+                new FakeMiddleware(),
+                new Runner([
+                    new FakeMiddleware(),
+                    new FakeMiddleware(),
+                ]),
+            ]),
+            new FakeMiddleware()
+        ]);
+
+        $response = $runner(
+            ServerRequestFactory::fromGlobals(),
+            new Response()
+        );
+
+        $actual = (string) $response->getBody();
+        $this->assertSame('1>2>3>4>5><5<4<3<2<1', $actual);
     }
 }

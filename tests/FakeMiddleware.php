@@ -13,9 +13,11 @@ class FakeMiddleware implements MiddlewareInterface
         ResponseInterface $response,
         callable $next
     ) {
-        $response->getBody()->write(++ static::$count);
+        $n = ++ static::$count;
+
+        $response->getBody()->write("{$n}>");
         $response = $next($request, $response);
-        $response->getBody()->write(++ static::$count);
+        $response->getBody()->write("<{$n}");
         return $response;
     }
 }

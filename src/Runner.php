@@ -43,6 +43,15 @@ class Runner
 
     /**
      *
+     * A callable used as the last middleware callable.
+     *
+     * @var callable|null
+     *
+     */
+    protected $next;
+
+    /**
+     *
      * Constructor.
      *
      * @param (callable|MiddlewareInterface)[] $queue The middleware queue.
@@ -63,24 +72,19 @@ class Runner
      * @param ServerRequestInterface $request The request.
      *
      * @param ResponseInterface $response The response.
+     * 
+     * @param callable|null $next An optional callable used to run this instance as a middleware callable.
      *
      * @return ResponseInterface
      *
      * @throws \UnexpectedValueException Middleware must return instance of ResponseInterface.
      *
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response)
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
     {
-        $entry = array_shift($this->queue);
-        $middleware = $this->resolve($entry);
+        $this->next = $next;
 
-        $return = $middleware($request, $response, $this);
-
-        if(! $return instanceof ResponseInterface) {
-            throw new UnexpectedValueException("Middleware must return Response object.");
-        }
-
-        return $return;
+        return $this->run($request, $response);
     }
 
     /**
@@ -96,7 +100,16 @@ class Runner
      */
     public function run(ServerRequestInterface $request, ResponseInterface $response)
     {
-        return $this($request, $response);
+        $entry = array_shift($this->queue);
+        $middleware = $this->resolve($entry);
+
+        $return = $middleware($request, $response, [$this, 'run']);
+
+        if(! $return instanceof ResponseInterface) {
+            throw new UnexpectedValueException("Middleware must return Response object.");
+        }
+
+        return $return;
     }
 
     /**
@@ -125,11 +138,11 @@ class Runner
      *
      * Returns a new instance of the Last middleware callable.
      *
-     * @return Last
+     * @return Last|callable
      *
      */
     protected function last()
     {
-        return new Last();
+        return $this->next ?: new Last();
     }
 }
