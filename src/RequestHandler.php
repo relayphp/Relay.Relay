@@ -53,7 +53,7 @@ abstract class RequestHandler implements RequestHandlerInterface
 
     /**
      *
-     * Handles the next entry in the queue.
+     * Handles the current entry in the middleware queue and advances.
      *
      * @param ServerRequestInterface $request The request.
      *
