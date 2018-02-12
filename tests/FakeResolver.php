@@ -1,10 +1,14 @@
 <?php
 namespace Relay;
 
-class FakeResolver implements ResolverInterface
+class FakeResolver
 {
-    public function __invoke($class)
+    public function __invoke($entry)
     {
-        return new $class();
+        if (is_string($entry)) {
+            return new $entry();
+        }
+
+        return $entry;
     }
 }

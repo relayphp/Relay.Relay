@@ -3,20 +3,19 @@ namespace Relay;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 class FakeMiddleware implements MiddlewareInterface
 {
     public static $count = 0;
 
-    public function __invoke(
+    public function process(
         ServerRequestInterface $request,
-        ResponseInterface $response,
-        callable $next
-    ) {
+        RequestHandlerInterface $handler
+    ) : ResponseInterface {
         $n = ++ static::$count;
-
-        $response->getBody()->write("{$n}>");
-        $response = $next($request, $response);
+        $response = $handler->handle($request);
         $response->getBody()->write("<{$n}");
         return $response;
     }

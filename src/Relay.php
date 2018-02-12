@@ -5,7 +5,7 @@
  *
  * @license http://opensource.org/licenses/MIT MIT
  *
- * @copyright 2015, Paul M. Jones
+ * @copyright 2015-2018, Paul M. Jones
  *
  */
 namespace Relay;
@@ -15,64 +15,20 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  *
- * A multiple-use PSR-7 middleware dispatcher.
+ * A multiple-use PSR-15 request handler.
  *
- * @package Relay.Relay
+ * @package relay/relay
  *
  */
-class Relay
+class Relay extends RequestHandler
 {
     /**
-     *
-     * A factory to create Runner objects.
-     *
-     * @var RunnerFactory
-     *
+     * @inheritdoc
      */
-    protected $runnerFactory;
-
-    /**
-     *
-     * Constructor.
-     *
-     * @param RunnerFactory $runnerFactory A factory to create Runner objects.
-     *
-     */
-    public function __construct(RunnerFactory $runnerFactory)
+    public function handle(ServerRequestInterface $request) : ResponseInterface
     {
-        $this->runnerFactory = $runnerFactory;
-    }
-
-    /**
-     *
-     * Dispatches to a new Runner.
-     *
-     * @param ServerRequestInterface $request The request.
-     *
-     * @param ResponseInterface $response The response.
-     *
-     * @return ResponseInterface
-     *
-     */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response)
-    {
-        $runner = $this->runnerFactory->newInstance();
-        return $runner($request, $response);
-    }
-
-    /**
-     *
-     * Dispatches to a new Runner; essentially an alias to `__invoke()`.
-     *
-     * @param ServerRequestInterface $request The request.
-     *
-     * @param ResponseInterface $response The response.
-     *
-     * @return ResponseInterface
-     *
-     */
-    public function run(ServerRequestInterface $request, ResponseInterface $response)
-    {
-        return $this($request, $response);
+        reset($this->queue);
+        $runner = new Runner($this->queue, $this->resolver);
+        return $runner->handle($request);
     }
 }

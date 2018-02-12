@@ -5,144 +5,37 @@
  *
  * @license http://opensource.org/licenses/MIT MIT
  *
- * @copyright 2015, Paul M. Jones
+ * @copyright 2015-2018, Paul M. Jones
  *
  */
 namespace Relay;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use UnexpectedValueException;
+use Psr\Http\Server\MiddlewareInterface;
 
 /**
  *
- * A single-use PSR-7 middleware dispatcher.
+ * A single-use PSR-15 middleware dispatcher.
  *
- * @package Relay.Relay
+ * @package relay/relay
  *
  */
-class Runner
+class Runner extends RequestHandler
 {
     /**
-     *
-     * The middleware queue.
-     *
-     * @var (callable|MiddlewareInterface)[]
-     *
+     * @inheritdoc
      */
-    protected $queue = [];
-
-    /**
-     *
-     * A callable to convert queue entries to callables.
-     *
-     * @var callable|ResolverInterface
-     *
-     */
-    protected $resolver;
-
-    /**
-     *
-     * A callable used as the last middleware callable.
-     *
-     * @var callable|null
-     *
-     */
-    protected $next;
-
-    /**
-     *
-     * Constructor.
-     *
-     * @param (callable|MiddlewareInterface)[] $queue The middleware queue.
-     *
-     * @param callable|ResolverInterface $resolver Converts queue entries to callables.
-     *
-     */
-    public function __construct(array $queue, callable $resolver = null)
+    public function handle(ServerRequestInterface $request) : ResponseInterface
     {
-        $this->queue = $queue;
-        $this->resolver = $resolver;
-    }
+        $entry = current($this->queue);
+        $middleware = call_user_func($this->resolver, $entry);
+        next($this->queue);
 
-    /**
-     *
-     * Calls the next entry in the queue.
-     *
-     * @param ServerRequestInterface $request The request.
-     *
-     * @param ResponseInterface $response The response.
-     * 
-     * @param callable|null $next An optional callable used to run this instance as a middleware callable.
-     *
-     * @return ResponseInterface
-     *
-     * @throws \UnexpectedValueException Middleware must return instance of ResponseInterface.
-     *
-     */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
-    {
-        $this->next = $next;
-
-        return $this->run($request, $response);
-    }
-
-    /**
-     *
-     * Calls the next entry in the queue; essentially an alias to `__invoke()`.
-     *
-     * @param ServerRequestInterface $request The request.
-     *
-     * @param ResponseInterface $response The response.
-     *
-     * @return ResponseInterface
-     *
-     */
-    public function run(ServerRequestInterface $request, ResponseInterface $response)
-    {
-        $entry = array_shift($this->queue);
-        $middleware = $this->resolve($entry);
-
-        $return = $middleware($request, $response, [$this, 'run']);
-
-        if(! $return instanceof ResponseInterface) {
-            throw new UnexpectedValueException("Middleware must return Response object.");
+        if ($middleware instanceof MiddlewareInterface) {
+            return $middleware->process($request, $this);
         }
 
-        return $return;
-    }
-
-    /**
-     *
-     * Converts a queue entry to a callable, using the resolver if present.
-     *
-     * @param mixed $entry The queue entry.
-     *
-     * @return callable|MiddlewareInterface
-     *
-     */
-    protected function resolve($entry)
-    {
-        if (! $entry) {
-            return $this->last();
-        }
-
-        if (! $this->resolver) {
-            return $entry;
-        }
-
-        return call_user_func($this->resolver, $entry);
-    }
-
-    /**
-     *
-     * Returns a new instance of the Last middleware callable.
-     *
-     * @return Last|callable
-     *
-     */
-    protected function last()
-    {
-        return $this->next ?: new Last();
+        return $middleware($request, $this);
     }
 }
