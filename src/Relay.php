@@ -15,7 +15,7 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  *
- * A multiple-use PSR-15 request handler.
+ * A reusable PSR-15 request handler.
  *
  * @package relay/relay
  *

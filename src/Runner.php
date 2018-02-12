@@ -16,7 +16,7 @@ use Psr\Http\Server\MiddlewareInterface;
 
 /**
  *
- * A single-use PSR-15 request handler.
+ * A PSR-15 request handler.
  *
  * @package relay/relay
  *
