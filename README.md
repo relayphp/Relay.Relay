@@ -10,7 +10,7 @@ Alternatively, download a release or clone this repository, then map the `Relay\
 
 This package requires PHP 7.1 or later. You should use the latest available version of PHP as a matter of principle.
 
-To run the tests, issue `composer install` to install the test dependencies, then issue `phpunit`.
+To run the tests, issue `composer install` to install the test dependencies, then issue `./vendor/bin/phpunit`.
 
 Please see <http://relayphp.com> for documentation.
 
