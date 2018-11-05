@@ -36,6 +36,6 @@ class Runner extends RequestHandler
             return $middleware->process($request, $this);
         }
 
-        return $middleware($request, $this);
+        return call_user_func($middleware, $request, $this);
     }
 }
