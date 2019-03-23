@@ -26,9 +26,6 @@ class RelayBuilderTest extends \PHPUnit\Framework\TestCase
         $queue = new ArrayObject([]);
         $relay = $this->relayBuilder->newInstance($queue);
         $this->assertInstanceOf('Relay\Relay', $relay);
-
-        $relay = $this->relayBuilder->newInstance($queue);
-        $this->assertInstanceOf('Relay\Relay', $relay);
     }
 
     public function testTraversable()
