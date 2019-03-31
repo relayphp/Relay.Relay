@@ -1,10 +1,11 @@
 {
     "name": "relay/relay",
     "type": "library",
-    "description": "A PSR-7 middleware dispatcher.",
+    "description": "A PSR-15 server request handler.",
     "keywords": [
         "middleware",
-        "psr-7"
+        "psr-7",
+        "psr-15"
     ],
     "homepage": "https://github.com/relayphp/Relay.Relay",
     "license": "MIT",
