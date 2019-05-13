@@ -24,6 +24,12 @@ use TypeError;
  */
 abstract class RequestHandler implements RequestHandlerInterface
 {
+    
+    /**
+     * @var callable
+     */
+    protected $resolver;
+    
     /**
      *
      * Constructor.
