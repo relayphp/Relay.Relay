@@ -13,6 +13,7 @@ namespace Relay;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Traversable;
 use TypeError;
 
 /**
@@ -24,7 +25,10 @@ use TypeError;
  */
 abstract class RequestHandler implements RequestHandlerInterface
 {
-    
+    /**
+     * @var array|Traversable
+     */
+    protected $queue;
     /**
      * @var callable
      */
