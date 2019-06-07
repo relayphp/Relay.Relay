@@ -10,6 +10,7 @@
  */
 namespace Relay;
 
+use InvalidArgumentException;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -48,6 +49,10 @@ abstract class RequestHandler implements RequestHandlerInterface
     {
         if (! is_iterable($queue)) {
             throw new TypeError('\$queue must be array or Traversable.');
+        }
+
+        if (empty($queue)) {
+            throw new InvalidArgumentException('$queue cannot be empty');
         }
 
         $this->queue = $queue;
