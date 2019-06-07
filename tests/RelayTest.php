@@ -68,8 +68,7 @@ class RelayTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InvalidArgumentException::CLASS);
         $this->expectExceptionMessage('$queue cannot be empty');
 
-        $relay = new Relay([]);
-        $relay->handle(ServerRequestFactory::fromGlobals());
+        new Relay([]);
     }
 
     public function testResolverEntries()
