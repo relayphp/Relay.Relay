@@ -2,6 +2,7 @@
 namespace Relay;
 
 use ArrayObject;
+use InvalidArgumentException;
 use TypeError;
 use Zend\Diactoros\ServerRequestFactory;
 use Zend\Diactoros\Response;
@@ -60,6 +61,14 @@ class RelayTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectException(TypeError::CLASS);
         $relay = new Relay('bad');
+    }
+
+    public function testEmptyQueue()
+    {
+        $this->expectException(InvalidArgumentException::CLASS);
+        $this->expectExceptionMessage('$queue cannot be empty');
+
+        new Relay([]);
     }
 
     public function testResolverEntries()

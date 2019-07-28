@@ -4,6 +4,7 @@ namespace Relay;
 use ArrayObject;
 use InvalidArgumentException;
 use Traversable;
+use Zend\Diactoros\ServerRequestFactory;
 
 class RelayBuilderTest extends \PHPUnit\Framework\TestCase
 {
@@ -16,14 +17,18 @@ class RelayBuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testArray()
     {
-        $queue = [];
+        $queue = [
+            new FakeMiddleware()
+        ];
         $relay = $this->relayBuilder->newInstance($queue);
         $this->assertInstanceOf('Relay\Relay', $relay);
     }
 
     public function testArrayObject()
     {
-        $queue = new ArrayObject([]);
+        $queue = new ArrayObject([
+            new FakeMiddleware()
+        ]);
         $relay = $this->relayBuilder->newInstance($queue);
         $this->assertInstanceOf('Relay\Relay', $relay);
     }
@@ -40,5 +45,13 @@ class RelayBuilderTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectException('TypeError');
         $this->relayBuilder->newInstance('bad argument');
+    }
+
+    public function testEmptyQueue()
+    {
+        $this->expectException(InvalidArgumentException::CLASS);
+        $this->expectExceptionMessage('$queue cannot be empty');
+
+        $this->relayBuilder->newInstance([]);
     }
 }
