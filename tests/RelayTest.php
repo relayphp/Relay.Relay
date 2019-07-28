@@ -5,6 +5,7 @@ use ArrayObject;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use RuntimeException;
 use TypeError;
 use Zend\Diactoros\ServerRequestFactory;
 use Zend\Diactoros\Response;
@@ -62,7 +63,7 @@ class RelayTest extends \PHPUnit\Framework\TestCase
     public function testBadQueue()
     {
         $this->expectException(TypeError::CLASS);
-        $relay = new Relay('bad');
+        new Relay('bad');
     }
 
     public function testEmptyQueue()
@@ -71,6 +72,17 @@ class RelayTest extends \PHPUnit\Framework\TestCase
         $this->expectExceptionMessage('$queue cannot be empty');
 
         new Relay([]);
+    }
+
+    public function testQueueWithInvalidEntry()
+    {
+        $this->expectException(RuntimeException::CLASS);
+        $this->expectExceptionMessage(
+            "Invalid middleware queue entry: bad. Middleware must either be callable or implement Psr\Http\Server\MiddlewareInterface."
+        );
+
+        $relay = new Relay(['bad']);
+        $relay->handle(ServerRequestFactory::fromGlobals());
     }
 
     public function testResolverEntries()
