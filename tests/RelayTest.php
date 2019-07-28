@@ -3,6 +3,8 @@ namespace Relay;
 
 use ArrayObject;
 use InvalidArgumentException;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use TypeError;
 use Zend\Diactoros\ServerRequestFactory;
 use Zend\Diactoros\Response;
@@ -83,5 +85,27 @@ class RelayTest extends \PHPUnit\Framework\TestCase
         $resolver = new FakeResolver();
 
         $this->assertRelay(new Relay($queue, $resolver));
+    }
+
+    public function testCallableMiddleware()
+    {
+        $queue = [
+            function (
+                ServerRequestInterface $request,
+                callable $next
+            ) : ResponseInterface {
+                $response = $next($request);
+
+                $response->getBody()->write('Hello, callable world!');
+
+                return $response;
+            },
+            $this->responder
+        ];
+
+        $relay = new Relay($queue);
+        $response = $relay->handle(ServerRequestFactory::fromGlobals());
+
+        $this->assertEquals('Hello, callable world!', (string) $response->getBody());
     }
 }

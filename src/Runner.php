@@ -38,4 +38,9 @@ class Runner extends RequestHandler
 
         return $middleware($request, $this);
     }
+
+    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    {
+        return $this->handle($request);
+    }
 }
