@@ -18,21 +18,27 @@
     "require": {
         "php": ">=7.1",
         "psr/http-message": "~1.0",
-        "psr/http-server-handler": "~1.0"
+        "psr/http-server-handler": "~1.0",
+        "psr/http-server-middleware": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~7.0",
+        "zendframework/zend-diactoros": "~1.0"
     },
     "autoload": {
         "psr-4": {
             "Relay\\": "src/"
         }
     },
-    "require-dev": {
-        "zendframework/zend-diactoros": "~1.0",
-        "psr/http-server-middleware": "~1.0",
-        "phpunit/phpunit": "~7.0"
-    },
     "autoload-dev": {
         "psr-4": {
             "Relay\\": "tests/"
         }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "provide": {
+        "psr/http-server-handler-implementation": "1.0"
     }
 }
