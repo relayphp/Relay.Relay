@@ -13,6 +13,7 @@ namespace Relay;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  *
@@ -34,6 +35,10 @@ class Runner extends RequestHandler
 
         if ($middleware instanceof MiddlewareInterface) {
             return $middleware->process($request, $this);
+        }
+        
+        if ($middleware instanceof RequestHandlerInterface) {
+            return $middleware->handle($request);
         }
 
         return $middleware($request, $this);
