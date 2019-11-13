@@ -99,6 +99,19 @@ class RelayTest extends \PHPUnit\Framework\TestCase
         $this->assertRelay(new Relay($queue, $resolver));
     }
 
+ 
+    public function testRequestHandlerInQueue()
+    {
+        $queue = [
+            new FakeMiddleware(),
+            new FakeMiddleware(),
+            new FakeMiddleware(),
+            $this->responder,
+        ];
+        $requestHandler = new Relay($queue);
+        $this->assertRelay(new Relay([$requestHandler]));
+    }
+    
     public function testCallableMiddleware()
     {
         $queue = [

@@ -13,6 +13,7 @@ namespace Relay;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use RuntimeException;
 use function is_callable;
 
@@ -38,6 +39,10 @@ class Runner extends RequestHandler
             return $middleware->process($request, $this);
         }
 
+        if ($middleware instanceof RequestHandlerInterface) {
+            return $middleware->handle($request);
+        }
+        
         if (is_callable($middleware)) {
             return $middleware($request, $this);
         }
