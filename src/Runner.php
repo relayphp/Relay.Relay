@@ -14,6 +14,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use RuntimeException;
+use function is_callable;
 
 /**
  *
@@ -36,11 +38,23 @@ class Runner extends RequestHandler
         if ($middleware instanceof MiddlewareInterface) {
             return $middleware->process($request, $this);
         }
-        
+
         if ($middleware instanceof RequestHandlerInterface) {
             return $middleware->handle($request);
         }
+        
+        if (is_callable($middleware)) {
+            return $middleware($request, $this);
+        }
 
-        return $middleware($request, $this);
+        throw new RuntimeException(
+            "Invalid middleware queue entry: {$middleware}. Middleware must either be callable or implement " .
+            MiddlewareInterface::class . '.'
+        );
+    }
+
+    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    {
+        return $this->handle($request);
     }
 }
