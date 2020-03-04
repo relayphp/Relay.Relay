@@ -21,7 +21,7 @@ class RelayTest extends \PHPUnit\Framework\TestCase
         };
     }
 
-    protected function assertRelay($relay)
+    protected function assertRelay(Relay $relay)
     {
         FakeMiddleware::$count = 0;
 
@@ -60,15 +60,18 @@ class RelayTest extends \PHPUnit\Framework\TestCase
         $this->assertRelay(new Relay($queue));
     }
 
+    /**
+     * @psalm-suppress InvalidArgument
+     */
     public function testBadQueue()
     {
-        $this->expectException(TypeError::CLASS);
+        $this->expectException(TypeError::class);
         new Relay('bad');
     }
 
     public function testEmptyQueue()
     {
-        $this->expectException(InvalidArgumentException::CLASS);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('$queue cannot be empty');
 
         new Relay([]);
@@ -76,7 +79,7 @@ class RelayTest extends \PHPUnit\Framework\TestCase
 
     public function testQueueWithInvalidEntry()
     {
-        $this->expectException(RuntimeException::CLASS);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage(
             "Invalid middleware queue entry: bad. Middleware must either be callable or implement Psr\Http\Server\MiddlewareInterface."
         );
@@ -88,9 +91,9 @@ class RelayTest extends \PHPUnit\Framework\TestCase
     public function testResolverEntries()
     {
         $queue = [
-            FakeMiddleware::CLASS,
-            FakeMiddleware::CLASS,
-            FakeMiddleware::CLASS,
+            FakeMiddleware::class,
+            FakeMiddleware::class,
+            FakeMiddleware::class,
             $this->responder,
         ];
 

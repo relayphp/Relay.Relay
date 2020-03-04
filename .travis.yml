@@ -8,6 +8,7 @@ before_script:
 script:
   - php vendor/bin/phpunit --coverage-clover=coverage.clover
   - php vendor/bin/phpstan analyse --no-interaction
+  - php vendor/bin/psalm
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover

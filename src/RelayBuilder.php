@@ -10,6 +10,8 @@
  */
 namespace Relay;
 
+use ArrayObject;
+use Traversable;
 
 /**
  *
@@ -24,7 +26,7 @@ class RelayBuilder
      *
      * A callable to convert queue entries to callables in the Runner.
      *
-     * @var callable|ResolverInterface
+     * @var callable
      *
      */
     protected $resolver;
@@ -33,7 +35,7 @@ class RelayBuilder
      *
      * Constructor.
      *
-     * @param callable|ResolverInterface $resolver A callable to convert a queue entry to
+     * @param callable $resolver A callable to convert a queue entry to
      * a callable|MiddlewareInterface in the Runner.
      *
      */
@@ -46,7 +48,7 @@ class RelayBuilder
      *
      * Creates a new Relay with the specified queue for its Runner objects.
      *
-     * @param array|ArrayObject|GetArrayCopyInterface|Traversable $queue The
+     * @param array|ArrayObject|Traversable $queue The
      * queue specification.
      *
      * @return Relay

@@ -48,7 +48,7 @@ class RelayBuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testEmptyQueue()
     {
-        $this->expectException(InvalidArgumentException::CLASS);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('$queue cannot be empty');
 
         $this->relayBuilder->newInstance([]);
