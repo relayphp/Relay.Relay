@@ -3,12 +3,12 @@ namespace Relay;
 
 use ArrayObject;
 use InvalidArgumentException;
+use Laminas\Diactoros\Response;
+use Laminas\Diactoros\ServerRequestFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use RuntimeException;
 use TypeError;
-use Zend\Diactoros\ServerRequestFactory;
-use Zend\Diactoros\Response;
 
 class RelayTest extends \PHPUnit\Framework\TestCase
 {

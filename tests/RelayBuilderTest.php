@@ -4,7 +4,6 @@ namespace Relay;
 use ArrayObject;
 use InvalidArgumentException;
 use Traversable;
-use Zend\Diactoros\ServerRequestFactory;
 
 class RelayBuilderTest extends \PHPUnit\Framework\TestCase
 {
