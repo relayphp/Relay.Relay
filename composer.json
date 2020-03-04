@@ -43,5 +43,12 @@
     },
     "provide": {
         "psr/http-server-handler-implementation": "1.0"
+    },
+    "scripts": {
+        "test": [
+            "phpunit",
+            "phpstan analyse",
+            "psalm"
+        ]
     }
 }
