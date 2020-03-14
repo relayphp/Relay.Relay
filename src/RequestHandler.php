@@ -28,7 +28,7 @@ use function count;
 abstract class RequestHandler implements RequestHandlerInterface
 {
     /**
-     * @var array|Traversable
+     * @var array
      */
     protected $queue;
     /**
@@ -56,7 +56,7 @@ abstract class RequestHandler implements RequestHandlerInterface
             throw new InvalidArgumentException('$queue cannot be empty');
         }
 
-        $this->queue = $queue;
+        $this->queue = is_array($queue) ? $queue : iterator_to_array($queue);
 
         if ($resolver === null) {
             $resolver = function ($entry) {

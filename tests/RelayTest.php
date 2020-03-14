@@ -1,8 +1,8 @@
 <?php
 namespace Relay;
 
-use ArrayObject;
 use InvalidArgumentException;
+use IteratorAggregate;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\ServerRequestFactory;
 use Psr\Http\Message\ResponseInterface;
@@ -50,12 +50,17 @@ class RelayTest extends \PHPUnit\Framework\TestCase
 
     public function testTraversableQueue()
     {
-        $queue = new ArrayObject([
-            new FakeMiddleware(),
-            new FakeMiddleware(),
-            new FakeMiddleware(),
-            $this->responder,
-        ]);
+        $queue = new class implements IteratorAggregate {
+            public function getIterator()
+            {
+                yield new FakeMiddleware();
+                yield new FakeMiddleware();
+                yield new FakeMiddleware();
+                yield function ($request, $next) {
+                    return new Response();
+                };
+            }
+        };
 
         $this->assertRelay(new Relay($queue));
     }
