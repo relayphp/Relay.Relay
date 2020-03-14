@@ -1,28 +1,20 @@
 <?php
-/**
- *
- * This file is part of Relay for PHP.
- *
- * @license http://opensource.org/licenses/MIT MIT
- *
- * @copyright 2015-2018, Paul M. Jones
- *
- */
+
 namespace Relay;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use RuntimeException;
+use function call_user_func;
+use function current;
 use function is_callable;
+use function next;
+use function sprintf;
 
 /**
- *
  * A PSR-15 request handler.
- *
- * @package relay/relay
- *
  */
 class Runner extends RequestHandler
 {
@@ -31,7 +23,7 @@ class Runner extends RequestHandler
      */
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
-        $entry = current($this->queue);
+        $entry      = current($this->queue);
         $middleware = call_user_func($this->resolver, $entry);
         next($this->queue);
 
@@ -42,14 +34,17 @@ class Runner extends RequestHandler
         if ($middleware instanceof RequestHandlerInterface) {
             return $middleware->handle($request);
         }
-        
+
         if (is_callable($middleware)) {
             return $middleware($request, $this);
         }
 
         throw new RuntimeException(
-            "Invalid middleware queue entry: {$middleware}. Middleware must either be callable or implement " .
-            MiddlewareInterface::class . '.'
+            sprintf(
+                'Invalid middleware queue entry: %s. Middleware must either be callable or implement %s.',
+                $middleware,
+                MiddlewareInterface::class
+            )
         );
     }
 

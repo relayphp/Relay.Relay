@@ -1,50 +1,29 @@
 <?php
-/**
- *
- * This file is part of Relay for PHP.
- *
- * @license http://opensource.org/licenses/MIT MIT
- *
- * @copyright 2015-2018, Paul M. Jones
- *
- */
+
 namespace Relay;
 
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Traversable;
 use TypeError;
-use function count;
+use function is_array;
+use function is_iterable;
+use function iterator_to_array;
 
 /**
- *
  * An abstract PSR-15 request handler.
- *
- * @package relay/relay
- *
  */
 abstract class RequestHandler implements RequestHandlerInterface
 {
-    /**
-     * @var array
-     */
+    /** @var mixed[] */
     protected $queue;
-    /**
-     * @var callable
-     */
+    /** @var callable */
     protected $resolver;
-    
+
     /**
-     *
-     * Constructor.
-     *
-     * @param array|Traversable $queue A queue of middleware entries.
-     *
-     * @param callable $resolver Converts queue entries to middleware
-     * instances.
-     *
+     * @param iterable<mixed> $queue    A queue of middleware entries.
+     * @param callable        $resolver Converts a given queue entry to a callable or MiddlewareInterface instance.
      */
     public function __construct($queue, callable $resolver = null)
     {
@@ -52,11 +31,15 @@ abstract class RequestHandler implements RequestHandlerInterface
             throw new TypeError('\$queue must be array or Traversable.');
         }
 
-        if (count($queue) === 0) {
+        if (! is_array($queue)) {
+            $queue = iterator_to_array($queue);
+        }
+
+        if (empty($queue)) {
             throw new InvalidArgumentException('$queue cannot be empty');
         }
 
-        $this->queue = is_array($queue) ? $queue : iterator_to_array($queue);
+        $this->queue = $queue;
 
         if ($resolver === null) {
             $resolver = function ($entry) {
@@ -68,13 +51,7 @@ abstract class RequestHandler implements RequestHandlerInterface
     }
 
     /**
-     *
      * Handles the current entry in the middleware queue and advances.
-     *
-     * @param ServerRequestInterface $request The request.
-     *
-     * @return ResponseInterface
-     *
      */
     abstract public function handle(ServerRequestInterface $request) : ResponseInterface;
 }

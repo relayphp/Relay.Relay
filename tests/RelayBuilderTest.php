@@ -1,12 +1,15 @@
 <?php
+
 namespace Relay;
 
 use ArrayObject;
 use InvalidArgumentException;
-use Traversable;
+use IteratorAggregate;
+use PHPUnit\Framework\TestCase;
 
-class RelayBuilderTest extends \PHPUnit\Framework\TestCase
+class RelayBuilderTest extends TestCase
 {
+    /** @var RelayBuilder */
     protected $relayBuilder;
 
     protected function setUp()
@@ -16,30 +19,34 @@ class RelayBuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testArray()
     {
-        $queue = [
-            new FakeMiddleware()
-        ];
+        $queue = [new FakeMiddleware()];
         $relay = $this->relayBuilder->newInstance($queue);
         $this->assertInstanceOf('Relay\Relay', $relay);
     }
 
     public function testArrayObject()
     {
-        $queue = new ArrayObject([
-            new FakeMiddleware()
-        ]);
+        $queue = new ArrayObject([new FakeMiddleware()]);
         $relay = $this->relayBuilder->newInstance($queue);
         $this->assertInstanceOf('Relay\Relay', $relay);
     }
 
     public function testTraversable()
     {
-        $queue = $this->createMock(Traversable::class);
+        $queue = new class implements IteratorAggregate {
+            public function getIterator()
+            {
+                yield new FakeMiddleware();
+            }
+        };
 
         $relay = $this->relayBuilder->newInstance($queue);
         $this->assertInstanceOf('Relay\Relay', $relay);
     }
 
+    /**
+     * @psalm-suppress InvalidArgument
+     */
     public function testInvalidArgument()
     {
         $this->expectException('TypeError');

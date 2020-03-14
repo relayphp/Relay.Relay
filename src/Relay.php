@@ -1,24 +1,13 @@
 <?php
-/**
- *
- * This file is part of Relay for PHP.
- *
- * @license http://opensource.org/licenses/MIT MIT
- *
- * @copyright 2015-2018, Paul M. Jones
- *
- */
+
 namespace Relay;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use function reset;
 
 /**
- *
  * A reusable PSR-15 request handler.
- *
- * @package relay/relay
- *
  */
 class Relay extends RequestHandler
 {
@@ -29,6 +18,7 @@ class Relay extends RequestHandler
     {
         reset($this->queue);
         $runner = new Runner($this->queue, $this->resolver);
+
         return $runner->handle($request);
     }
 }

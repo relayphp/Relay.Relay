@@ -1,17 +1,21 @@
 <?php
+
 namespace Relay;
 
+use Closure;
 use InvalidArgumentException;
 use IteratorAggregate;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\ServerRequestFactory;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use RuntimeException;
 use TypeError;
 
-class RelayTest extends \PHPUnit\Framework\TestCase
+class RelayTest extends TestCase
 {
+    /** @var Closure */
     protected $responder;
 
     protected function setUp()
@@ -27,12 +31,12 @@ class RelayTest extends \PHPUnit\Framework\TestCase
 
         // relay once
         $response = $relay->handle(ServerRequestFactory::fromGlobals());
-        $actual = (string) $response->getBody();
+        $actual   = (string) $response->getBody();
         $this->assertSame('<3<2<1', $actual);
 
         // relay again
         $response = $relay->handle(ServerRequestFactory::fromGlobals());
-        $actual = (string) $response->getBody();
+        $actual   = (string) $response->getBody();
         $this->assertSame('<6<5<4', $actual);
     }
 
@@ -86,7 +90,7 @@ class RelayTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage(
-            "Invalid middleware queue entry: bad. Middleware must either be callable or implement Psr\Http\Server\MiddlewareInterface."
+            'Invalid middleware queue entry: bad. Middleware must either be callable or implement Psr\Http\Server\MiddlewareInterface.'
         );
 
         $relay = new Relay(['bad']);
@@ -107,10 +111,9 @@ class RelayTest extends \PHPUnit\Framework\TestCase
         $this->assertRelay(new Relay($queue, $resolver));
     }
 
- 
     public function testRequestHandlerInQueue()
     {
-        $queue = [
+        $queue          = [
             new FakeMiddleware(),
             new FakeMiddleware(),
             new FakeMiddleware(),
@@ -119,7 +122,7 @@ class RelayTest extends \PHPUnit\Framework\TestCase
         $requestHandler = new Relay($queue);
         $this->assertRelay(new Relay([$requestHandler]));
     }
-    
+
     public function testCallableMiddleware()
     {
         $queue = [
@@ -133,10 +136,10 @@ class RelayTest extends \PHPUnit\Framework\TestCase
 
                 return $response;
             },
-            $this->responder
+            $this->responder,
         ];
 
-        $relay = new Relay($queue);
+        $relay    = new Relay($queue);
         $response = $relay->handle(ServerRequestFactory::fromGlobals());
 
         $this->assertEquals('Hello, callable world!', (string) $response->getBody());

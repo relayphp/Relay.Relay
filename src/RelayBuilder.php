@@ -1,43 +1,14 @@
 <?php
-/**
- *
- * This file is part of Relay for PHP.
- *
- * @license http://opensource.org/licenses/MIT MIT
- *
- * @copyright 2015, Paul M. Jones
- *
- */
+
 namespace Relay;
 
-use ArrayObject;
-use Traversable;
-
-/**
- *
- * A builder to create Relay objects.
- *
- * @package Relay.Relay
- *
- */
 class RelayBuilder
 {
-    /**
-     *
-     * A callable to convert queue entries to callables in the Runner.
-     *
-     * @var callable
-     *
-     */
+    /** @var callable */
     protected $resolver;
 
     /**
-     *
-     * Constructor.
-     *
-     * @param callable $resolver A callable to convert a queue entry to
-     * a callable|MiddlewareInterface in the Runner.
-     *
+     * @param callable $resolver Converts a given queue entry to a callable or MiddlewareInterface instance.
      */
     public function __construct(callable $resolver = null)
     {
@@ -45,14 +16,7 @@ class RelayBuilder
     }
 
     /**
-     *
-     * Creates a new Relay with the specified queue for its Runner objects.
-     *
-     * @param array|ArrayObject|Traversable $queue The
-     * queue specification.
-     *
-     * @return Relay
-     *
+     * @param iterable<mixed> $queue A queue of middleware entries.
      */
     public function newInstance($queue) : Relay
     {
