@@ -2,6 +2,11 @@
 
 This is the changelog for the 2.x series.
 
+## 2.1.1
+
+- Fix a bug where Traversable queues (non-array iterables) will fail because the `reset()`, `current()`, and `next()` array functions are incompatible
+- Improve the overall code quality of the project (through internal changes that do not alter the public API)
+
 ## 2.1.0
 
 - Raise a more obvious error message when Relay is given an empty queue (#43)
