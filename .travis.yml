@@ -11,7 +11,7 @@ before_script:
 script:
   - php vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no
   - php vendor/bin/phpcs --no-cache --no-colors
-  - php vendor/bin/phpunit --coverage-clover=coverage.clover
+  - XDEBUG_MODE=coverage php vendor/bin/phpunit --coverage-clover=coverage.clover
   - php vendor/bin/phpstan analyse --no-interaction
   - php vendor/bin/psalm
 after_script:
