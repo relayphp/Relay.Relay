@@ -3,6 +3,7 @@
 namespace Relay;
 
 use Psr\Http\Server\MiddlewareInterface;
+
 use function is_string;
 
 class FakeResolver

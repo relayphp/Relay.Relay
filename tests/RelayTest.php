@@ -3,6 +3,7 @@
 namespace Relay;
 
 use Closure;
+use Generator;
 use InvalidArgumentException;
 use IteratorAggregate;
 use Laminas\Diactoros\Response;
@@ -18,7 +19,7 @@ class RelayTest extends TestCase
     /** @var Closure */
     protected $responder;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->responder = function ($request, $next) {
             return new Response();
@@ -55,7 +56,7 @@ class RelayTest extends TestCase
     public function testTraversableQueue()
     {
         $queue = new class implements IteratorAggregate {
-            public function getIterator()
+            public function getIterator(): Generator
             {
                 yield new FakeMiddleware();
                 yield new FakeMiddleware();
@@ -129,7 +130,7 @@ class RelayTest extends TestCase
             function (
                 ServerRequestInterface $request,
                 callable $next
-            ) : ResponseInterface {
+            ): ResponseInterface {
                 $response = $next($request);
 
                 $response->getBody()->write('Hello, callable world!');

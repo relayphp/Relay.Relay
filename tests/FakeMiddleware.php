@@ -6,6 +6,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+
 use function sprintf;
 
 class FakeMiddleware implements MiddlewareInterface
@@ -16,7 +17,7 @@ class FakeMiddleware implements MiddlewareInterface
     public function process(
         ServerRequestInterface $request,
         RequestHandlerInterface $handler
-    ) : ResponseInterface {
+    ): ResponseInterface {
         $n        = ++ static::$count;
         $response = $handler->handle($request);
         $response->getBody()->write(sprintf('<%s', $n));
