@@ -12,7 +12,7 @@ class RelayBuilderTest extends TestCase
     /** @var RelayBuilder */
     protected $relayBuilder;
 
-    protected function setUp()
+    protected function setUp() : void
     {
         $this->relayBuilder = new RelayBuilder();
     }

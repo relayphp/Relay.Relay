@@ -18,7 +18,7 @@ class RelayTest extends TestCase
     /** @var Closure */
     protected $responder;
 
-    protected function setUp()
+    protected function setUp() : void
     {
         $this->responder = function ($request, $next) {
             return new Response();
