@@ -26,7 +26,7 @@
         "friendsofphp/php-cs-fixer": "^2.16",
         "laminas/laminas-diactoros": "~2.2",
         "phpstan/phpstan": "^0.12.14",
-        "phpunit/phpunit": "~8.5",
+        "phpunit/phpunit": "~7.0 || ~8.5",
         "roave/security-advisories": "dev-master",
         "vimeo/psalm": "^4.7"
     },
