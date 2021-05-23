@@ -1,0 +1,62 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+
+  coding-standards:
+    name: Coding Standards
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+      - name: Install Composer Dependencies
+        uses: ramsey/composer-install@v1
+      - name: Run PHP-CS-Fixer
+        run: php vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no
+      - name: Run PHP_CodeSniffer
+        run: php vendor/bin/phpcs --no-cache --no-colors
+
+  static-analysis:
+    name: Static Analysis
+    strategy:
+      matrix:
+        os: [ ubuntu-18.04 ]
+        php: [ '7.1', '7.2', '7.3', '7.4' ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+      - name: Install Composer Dependencies
+        uses: ramsey/composer-install@v1
+      - name: Run PHPStan
+        run: php vendor/bin/phpstan analyse --no-interaction
+      - name: Run Psalm
+        run: php vendor/bin/psalm --shepherd
+
+  unit-tests:
+    name: Unit Tests
+    strategy:
+      matrix:
+        os: [ ubuntu-18.04 ]
+        php: [ '7.1', '7.2', '7.3', '7.4' ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+      - name: Install Composer Dependencies
+        uses: ramsey/composer-install@v1
+      - name: Run unit tests
+        run: php vendor/bin/phpunit
