@@ -18,7 +18,7 @@ class RelayBuilder
     /**
      * @param iterable<mixed> $queue A queue of middleware entries.
      */
-    public function newInstance($queue) : Relay
+    public function newInstance($queue): Relay
     {
         return new Relay($queue, $this->resolver);
     }

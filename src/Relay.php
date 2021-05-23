@@ -4,6 +4,7 @@ namespace Relay;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+
 use function reset;
 
 /**
@@ -11,10 +12,7 @@ use function reset;
  */
 class Relay extends RequestHandler
 {
-    /**
-     * @inheritdoc
-     */
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         reset($this->queue);
         $runner = new Runner($this->queue, $this->resolver);
