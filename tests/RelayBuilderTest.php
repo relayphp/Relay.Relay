@@ -3,6 +3,7 @@
 namespace Relay;
 
 use ArrayObject;
+use Generator;
 use InvalidArgumentException;
 use IteratorAggregate;
 use PHPUnit\Framework\TestCase;
@@ -12,7 +13,7 @@ class RelayBuilderTest extends TestCase
     /** @var RelayBuilder */
     protected $relayBuilder;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->relayBuilder = new RelayBuilder();
     }
@@ -34,7 +35,7 @@ class RelayBuilderTest extends TestCase
     public function testTraversable()
     {
         $queue = new class implements IteratorAggregate {
-            public function getIterator()
+            public function getIterator(): Generator
             {
                 yield new FakeMiddleware();
             }

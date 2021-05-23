@@ -7,6 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use TypeError;
+
 use function is_array;
 use function is_iterable;
 use function iterator_to_array;
@@ -53,5 +54,5 @@ abstract class RequestHandler implements RequestHandlerInterface
     /**
      * Handles the current entry in the middleware queue and advances.
      */
-    abstract public function handle(ServerRequestInterface $request) : ResponseInterface;
+    abstract public function handle(ServerRequestInterface $request): ResponseInterface;
 }

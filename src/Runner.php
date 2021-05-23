@@ -7,6 +7,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use RuntimeException;
+
 use function call_user_func;
 use function current;
 use function is_callable;
@@ -18,10 +19,7 @@ use function sprintf;
  */
 class Runner extends RequestHandler
 {
-    /**
-     * @inheritdoc
-     */
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $entry      = current($this->queue);
         $middleware = call_user_func($this->resolver, $entry);
@@ -48,7 +46,7 @@ class Runner extends RequestHandler
         );
     }
 
-    public function __invoke(ServerRequestInterface $request) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         return $this->handle($request);
     }
