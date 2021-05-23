@@ -19,6 +19,5 @@
         <exclude name="SlevomatCodingStandard.Functions.StaticClosure.ClosureNotStatic"/>
         <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint"/>
         <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint"/>
-        <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint"/>
     </rule>
 </ruleset>

@@ -17,6 +17,8 @@ class RelayBuilder
 
     /**
      * @param iterable<mixed> $queue A queue of middleware entries.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     public function newInstance($queue): Relay
     {
