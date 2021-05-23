@@ -18,21 +18,21 @@ class RelayBuilderTest extends TestCase
         $this->relayBuilder = new RelayBuilder();
     }
 
-    public function testArray()
+    public function testArray(): void
     {
         $queue = [new FakeMiddleware()];
         $relay = $this->relayBuilder->newInstance($queue);
         $this->assertInstanceOf('Relay\Relay', $relay);
     }
 
-    public function testArrayObject()
+    public function testArrayObject(): void
     {
         $queue = new ArrayObject([new FakeMiddleware()]);
         $relay = $this->relayBuilder->newInstance($queue);
         $this->assertInstanceOf('Relay\Relay', $relay);
     }
 
-    public function testTraversable()
+    public function testTraversable(): void
     {
         $queue = new class implements IteratorAggregate {
             public function getIterator(): Generator
@@ -48,13 +48,13 @@ class RelayBuilderTest extends TestCase
     /**
      * @psalm-suppress InvalidArgument
      */
-    public function testInvalidArgument()
+    public function testInvalidArgument(): void
     {
         $this->expectException('TypeError');
         $this->relayBuilder->newInstance('bad argument');
     }
 
-    public function testEmptyQueue()
+    public function testEmptyQueue(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('$queue cannot be empty');

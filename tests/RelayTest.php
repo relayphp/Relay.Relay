@@ -26,7 +26,7 @@ class RelayTest extends TestCase
         };
     }
 
-    protected function assertRelay(Relay $relay)
+    protected function assertRelay(Relay $relay): void
     {
         FakeMiddleware::$count = 0;
 
@@ -41,7 +41,7 @@ class RelayTest extends TestCase
         $this->assertSame('<6<5<4', $actual);
     }
 
-    public function testArrayQueue()
+    public function testArrayQueue(): void
     {
         $queue = [
             new FakeMiddleware(),
@@ -53,7 +53,7 @@ class RelayTest extends TestCase
         $this->assertRelay(new Relay($queue));
     }
 
-    public function testTraversableQueue()
+    public function testTraversableQueue(): void
     {
         $queue = new class implements IteratorAggregate {
             public function getIterator(): Generator
@@ -73,13 +73,13 @@ class RelayTest extends TestCase
     /**
      * @psalm-suppress InvalidArgument
      */
-    public function testBadQueue()
+    public function testBadQueue(): void
     {
         $this->expectException(TypeError::class);
         new Relay('bad');
     }
 
-    public function testEmptyQueue()
+    public function testEmptyQueue(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('$queue cannot be empty');
@@ -87,7 +87,7 @@ class RelayTest extends TestCase
         new Relay([]);
     }
 
-    public function testQueueWithInvalidEntry()
+    public function testQueueWithInvalidEntry(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage(
@@ -98,7 +98,7 @@ class RelayTest extends TestCase
         $relay->handle(ServerRequestFactory::fromGlobals());
     }
 
-    public function testResolverEntries()
+    public function testResolverEntries(): void
     {
         $queue = [
             FakeMiddleware::class,
@@ -112,7 +112,7 @@ class RelayTest extends TestCase
         $this->assertRelay(new Relay($queue, $resolver));
     }
 
-    public function testRequestHandlerInQueue()
+    public function testRequestHandlerInQueue(): void
     {
         $queue          = [
             new FakeMiddleware(),
@@ -124,7 +124,7 @@ class RelayTest extends TestCase
         $this->assertRelay(new Relay([$requestHandler]));
     }
 
-    public function testCallableMiddleware()
+    public function testCallableMiddleware(): void
     {
         $queue = [
             function (
