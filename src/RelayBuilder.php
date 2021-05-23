@@ -10,7 +10,7 @@ class RelayBuilder
     /**
      * @param callable $resolver Converts a given queue entry to a callable or MiddlewareInterface instance.
      */
-    public function __construct(callable $resolver = null)
+    public function __construct(?callable $resolver = null)
     {
         $this->resolver = $resolver;
     }

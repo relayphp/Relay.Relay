@@ -28,7 +28,7 @@ abstract class RequestHandler implements RequestHandlerInterface
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
-    public function __construct($queue, callable $resolver = null)
+    public function __construct($queue, ?callable $resolver = null)
     {
         if (! is_iterable($queue)) {
             throw new TypeError('\$queue must be array or Traversable.');
