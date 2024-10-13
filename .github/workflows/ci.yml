@@ -13,7 +13,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.1'
+          php-version: '7.2'
       - name: Install Composer Dependencies
         uses: ramsey/composer-install@v1
       - name: Run PHP-CS-Fixer
@@ -26,7 +26,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-18.04 ]
-        php: [ '7.1', '7.2', '7.3', '7.4', '8.0' ]
+        php: [ '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3' ]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
@@ -47,7 +47,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-18.04 ]
-        php: [ '7.1', '7.2', '7.3', '7.4', '8.0' ]
+        php: [ '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3' ]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
