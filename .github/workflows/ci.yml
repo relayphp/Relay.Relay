@@ -25,7 +25,7 @@ jobs:
     name: Static Analysis
     strategy:
       matrix:
-        os: [ ubuntu-18.04 ]
+        os: [ ubuntu-latest ]
         php: [ '7.1', '7.2', '7.3', '7.4', '8.0' ]
     runs-on: ${{ matrix.os }}
     steps:
@@ -46,7 +46,7 @@ jobs:
     name: Unit Tests
     strategy:
       matrix:
-        os: [ ubuntu-18.04 ]
+        os: [ ubuntu-latest ]
         php: [ '7.1', '7.2', '7.3', '7.4', '8.0' ]
     runs-on: ${{ matrix.os }}
     steps:
