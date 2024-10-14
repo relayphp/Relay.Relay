@@ -24,7 +24,8 @@
     "require-dev": {
         "doctrine/coding-standard": "^9.0",
         "friendsofphp/php-cs-fixer": "^3.0",
-        "laminas/laminas-diactoros": "~2.2",
+        "nyholm/psr7": "^1.6",
+        "nyholm/psr7-server": "^1.1",
         "phpstan/phpstan": "^0.12.14",
         "phpunit/phpunit": "~7.0 || ~9.5",
         "vimeo/psalm": "^4.7"
