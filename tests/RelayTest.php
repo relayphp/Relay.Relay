@@ -6,8 +6,9 @@ use Closure;
 use Generator;
 use InvalidArgumentException;
 use IteratorAggregate;
-use Laminas\Diactoros\Response;
-use Laminas\Diactoros\ServerRequestFactory;
+use Nyholm\Psr7\Factory\Psr17Factory;
+use Nyholm\Psr7\Response;
+use Nyholm\Psr7Server\ServerRequestCreator;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -31,12 +32,12 @@ class RelayTest extends TestCase
         FakeMiddleware::$count = 0;
 
         // relay once
-        $response = $relay->handle(ServerRequestFactory::fromGlobals());
+        $response = $relay->handle($this->createRequestFromGlobals());
         $actual   = (string) $response->getBody();
         $this->assertSame('<3<2<1', $actual);
 
         // relay again
-        $response = $relay->handle(ServerRequestFactory::fromGlobals());
+        $response = $relay->handle($this->createRequestFromGlobals());
         $actual   = (string) $response->getBody();
         $this->assertSame('<6<5<4', $actual);
     }
@@ -95,7 +96,7 @@ class RelayTest extends TestCase
         );
 
         $relay = new Relay(['bad']);
-        $relay->handle(ServerRequestFactory::fromGlobals());
+        $relay->handle($this->createRequestFromGlobals());
     }
 
     public function testResolverEntries(): void
@@ -141,8 +142,22 @@ class RelayTest extends TestCase
         ];
 
         $relay    = new Relay($queue);
-        $response = $relay->handle(ServerRequestFactory::fromGlobals());
+        $response = $relay->handle($this->createRequestFromGlobals());
 
         $this->assertEquals('Hello, callable world!', (string) $response->getBody());
+    }
+
+    private function createRequestFromGlobals(): ServerRequestInterface
+    {
+        $psr17Factory = new Psr17Factory();
+
+        $creator = new ServerRequestCreator(
+            $psr17Factory,
+            $psr17Factory,
+            $psr17Factory,
+            $psr17Factory
+        );
+
+        return $creator->fromGlobals();
     }
 }
