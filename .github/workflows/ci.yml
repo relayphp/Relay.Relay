@@ -27,6 +27,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         php: [ '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3' ]
+        composer-deps: [ 'lowest', 'highest' ]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
@@ -37,6 +38,8 @@ jobs:
           php-version: ${{ matrix.php }}
       - name: Install Composer Dependencies
         uses: ramsey/composer-install@v1
+        with:
+          dependency-versions: ${{ matrix.composer-deps }}
       - name: Run PHPStan
         run: php vendor/bin/phpstan analyse --no-interaction
       - name: Run Psalm
@@ -48,6 +51,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         php: [ '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3' ]
+        composer-deps: [ 'lowest', 'highest' ]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
@@ -58,5 +62,7 @@ jobs:
           php-version: ${{ matrix.php }}
       - name: Install Composer Dependencies
         uses: ramsey/composer-install@v1
+        with:
+          dependency-versions: ${{ matrix.composer-deps }}
       - name: Run unit tests
         run: php vendor/bin/phpunit
