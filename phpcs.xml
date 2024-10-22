@@ -20,4 +20,24 @@
         <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint"/>
         <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint"/>
     </rule>
+
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <properties>
+            <property name="forbiddenFunctions" type="array">
+                <element key="str_split" value="mb_str_split"/>
+                <element key="strlen" value="mb_strlen"/>
+                <element key="strpos" value="mb_strpos"/>
+                <element key="strrpos" value="mb_strrpos"/>
+                <element key="substr" value="mb_substr"/>
+                <element key="strtolower" value="mb_strtolower"/>
+                <element key="strtoupper" value="mb_strtoupper"/>
+                <element key="stripos" value="mb_stripos"/>
+                <element key="strripos" value="mb_strripos"/>
+                <element key="strstr" value="mb_strstr"/>
+                <element key="stristr" value="mb_stristr"/>
+                <element key="strrchr" value="mb_strrchr"/>
+                <element key="substr_count" value="mb_substr_count"/>
+            </property>
+        </properties>
+    </rule>
 </ruleset>
