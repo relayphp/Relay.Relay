@@ -29,7 +29,7 @@
         "phpstan/phpstan": "^1.4",
         "phpunit/phpunit": "~7.0 || ~9.5",
         "roave/security-advisories": "dev-master",
-        "vimeo/psalm": "^4.7"
+        "vimeo/psalm": "^4.30"
     },
     "autoload": {
         "psr-4": {
