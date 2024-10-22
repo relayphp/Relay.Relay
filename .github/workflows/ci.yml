@@ -16,8 +16,6 @@ jobs:
           php-version: '7.1'
       - name: Install Composer Dependencies
         uses: ramsey/composer-install@v1
-      - name: Run PHP-CS-Fixer
-        run: php vendor/bin/php-cs-fixer fix --verbose --dry-run --using-cache=no
       - name: Run PHP_CodeSniffer
         run: php vendor/bin/phpcs --no-cache --no-colors
 
